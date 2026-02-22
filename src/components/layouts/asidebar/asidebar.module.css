@@ -1,0 +1,123 @@
+.asidebar {
+  height: 100%;
+  width: 100%; /* Takes full width of wrapper */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(203, 213, 225, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0;
+}
+
+.navigation {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+}
+
+.nav_item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: 30px;
+  color: #475569;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.nav_item:hover {
+  background: rgba(241, 245, 249, 0.8);
+  backdrop-filter: blur(4px);
+  color: #1e293b;
+}
+
+.nav_item.active {
+  background: white;
+  color: #3b82f6;
+  padding: 10px 16px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.nav_icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.nav_name {
+  flex: 1;
+}
+
+/* Logout Button */
+.logout_container {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(203, 213, 225, 0.3);
+  margin-top: auto;
+}
+
+.logout_btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  width: 100%;
+  border: none;
+  border-radius: 30px;
+  background: transparent;
+  color: #ef4444;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.logout_btn:hover {
+  background: rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(4px);
+  color: #dc2626;
+}
+
+.logout_icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.logout_text {
+  flex: 1;
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav_name {
+    display: none; /* Hide text on smaller screens */
+  }
+
+  .nav_item {
+    justify-content: center;
+    padding: 12px;
+  }
+
+  .logout_text {
+    display: none;
+  }
+
+  .logout_btn {
+    justify-content: center;
+    padding: 12px;
+  }
+}

@@ -1,0 +1,73 @@
+.main_container {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.inner_container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.fillter_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+}
+.fillter_title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  letter-spacing: -0.3px;
+}
+
+/* Button container with light background */
+.btn_container {
+  background-color: #f8fafc;
+  padding: 4px;
+  border-radius: 40px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.clearAll_btn {
+  padding: 6px 16px;
+  background-color: transparent;
+  border: none;
+  border-radius: 30px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.clearAll_btn:hover {
+  background-color: #ffffff;
+  color: #ef4444; /* Red color for clear action */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.fillter_section {
+  margin-top: 20px;
+}
+
+.section_title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+
+.checkbox_group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

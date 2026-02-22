@@ -1,0 +1,44 @@
+.main_container {
+  width: 100vw;
+}
+
+.mainnavbar_wrapper {
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}
+
+.inner_section {
+  height: 100%;
+  padding-top: 7rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.asidebar_wrapper {
+  width: 230px;
+  position: fixed;
+  height: calc(100vh - 7rem);
+}
+
+.children_wrapper {
+  width: calc(100% - 330px);
+  margin-left: 260px;
+  padding: 2.5rem 0rem;
+  height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .inner_section {
+    padding-top: 3.5rem;
+  }
+
+  .asidebar_wrapper {
+    display: none;
+  }
+
+  .children_wrapper {
+    width: calc(100% - 0px);
+    margin-left: 0px;
+  }
+}
