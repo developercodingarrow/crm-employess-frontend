@@ -1,0 +1,59 @@
+/* Container with #f8fafc background (like navigation div) */
+.button_container {
+  background-color: var(--th-main-container-bg);
+  padding: 5px;
+  border-radius: 40px;
+  box-shadow: var(--th-btn-container-box-shadow);
+}
+
+/* Button itself - now transparent to show container background */
+.bar_button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background-color: transparent; /* Transparent to show container background */
+  border: none;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: var(--th-bold-text-color);
+}
+
+/* Hover effect - white background like nav_item:hover */
+.bar_button:hover {
+  color: var(--th-primary-color);
+}
+
+.button_icon {
+  font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .btn_text {
+    display: none;
+  }
+
+  .button_container {
+    padding: 3px;
+    border-radius: 30px;
+  }
+
+  /* Button itself - now transparent to show container background */
+  .bar_button {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .button_icon {
+    font-size: 16px;
+  }
+}

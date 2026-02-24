@@ -20,7 +20,7 @@ export default function Asidebar() {
     { id: 2, name: "Projects", href: "/projects", icon: <GoProject /> },
     { id: 3, name: "Leads", href: "/leads", icon: <GoPeople /> },
     { id: 4, name: "Reports", href: "/reports", icon: <GoGraph /> },
-    { id: 5, name: "Settings", href: "/settings", icon: <GoGear /> },
+    { id: 5, name: "Users", href: "/users", icon: <GoPeople /> },
   ];
 
   const handleLogout = () => {

@@ -1,0 +1,63 @@
+.status_container {
+  position: relative;
+  display: inline-block;
+}
+
+.status_trigger {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.status_trigger:hover {
+  background-color: #ffffff;
+  color: #3b82f6;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.status_dropdown {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  padding: 8px;
+  z-index: 1000;
+  border: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.status_option {
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.status_option:hover {
+  background-color: #f8fafc;
+}
+
+.status_dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}

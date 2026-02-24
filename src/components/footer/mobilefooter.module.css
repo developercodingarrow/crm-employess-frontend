@@ -1,14 +1,14 @@
 .mobile_footer {
-  display: none; /* Hidden by default, shown only on mobile */
+  display: block;
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 230px;
+  width: calc(100% - 230px);
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid rgba(203, 213, 225, 0.3);
-  z-index: 1000;
+  z-index: 10;
   padding: 8px 0 12px 0;
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
 }
@@ -60,6 +60,17 @@
 @media (max-width: 768px) {
   .mobile_footer {
     display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(203, 213, 225, 0.3);
+    z-index: 10;
+    padding: 8px 0 12px 0;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.02);
   }
 }
 

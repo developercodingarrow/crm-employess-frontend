@@ -1,12 +1,19 @@
 .main_container {
-  padding: 24px;
+  padding: var(--th-main-container-D-padding);
   height: 100%;
-  background-color: #f8fafc;
-  min-height: calc(100vh - 70px);
+  background-color: var(--th-main-container-bg);
+  margin-bottom: 10rem;
 }
 
 .page_header {
   margin-bottom: 24px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  /* padding: 20px; */
+  border-radius: 10px;
+  margin-bottom: 2rem;
 }
 
 .page_title {
@@ -228,9 +235,12 @@
     height: auto;
   }
 
-  .leads_column,
-  .create_leadColumn {
+  .leads_column {
     width: 100%;
+  }
+
+  .create_leadColumn {
+    display: none;
   }
 
   .leads_column {

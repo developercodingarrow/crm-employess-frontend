@@ -10,6 +10,9 @@ import FillterBar from "./FillterBar/FillterBar";
 import MobileFooter from "../footer/MobileFooter";
 import { AppContext } from "../../_contextApi/AppContextProvider";
 import MobileFilterDrawer from "./Mobile_Filter_Drawer/MobileFilterDrawer";
+import PageHeader from "../elements/page_header/PageHeader";
+import HeaderTopBar from "../elements/header_top_bar/HeaderTopBar";
+import StatTab from "../elements/stat_tab/StatTab";
 export default function ProjectPageLayout(props) {
   const { apiData } = props;
   const { isFilterOpen, setIsFilterOpen, toggleFilter, closeFilter } =
@@ -46,43 +49,25 @@ export default function ProjectPageLayout(props) {
         getUniqueBuilders={getUniqueBuilders}
         getPriceLimits={getPriceLimits}
       />
-      <section className={styles.pageHeader_section}>
-        <div className={styles.page_topBar}>
-          <div className={styles.page_title}>Projects</div>
-          {/* Add container div with #f8fafc background */}
-          <div className={styles.button_container}>
-            <button className={styles.bar_button}>
-              <GoPlus className={styles.button_icon} />
-              <span className={styles.btn_text}>Create New Project</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Stats Bar */}
+      <div className={styles.page_header}>
+        <HeaderTopBar
+          pageTitle="Projects"
+          pageSubtitle=" Manage system Projects and Details"
+        />
         <div className={styles.stats_bar}>
           <div className={styles.stats_container}>
-            <div className={styles.stat_box}>
-              <span className={styles.stat_number}>
-                {apiData?.stats?.total}
-              </span>
-              <span className={styles.stat_label}>Total Projects</span>
-            </div>
-            <div className={styles.stat_box}>
-              <span className={styles.stat_number}>
-                {apiData?.stats?.luxury}
-              </span>
-              <span className={styles.stat_label}>Luxury</span>
-            </div>
-            <div className={styles.stat_box}>
-              <span className={styles.stat_number}>
-                {apiData?.stats?.affordable}
-              </span>
-              <span className={styles.stat_label}>Affordable</span>
-            </div>
+            <StatTab
+              statNumber={apiData?.stats?.total}
+              statLabel="Total Projects"
+            />
+            <StatTab statNumber={apiData?.stats?.luxury} statLabel="Luxury" />
+            <StatTab
+              statNumber={apiData?.stats?.affordable}
+              statLabel="Affordable"
+            />
           </div>
         </div>
-      </section>
-
+      </div>
       <section className={styles.inner_container}>
         <div className={styles.sidefillter_wrapper}>
           <FillterBar
@@ -125,10 +110,7 @@ export default function ProjectPageLayout(props) {
       </section>
 
       <section className={styles.footer_wrapper}>
-        <div className={styles.dekstopfooter_Wrapper}>dekstop footer</div>
-        <div className={styles.mobilefooter_wrapper}>
-          <MobileFooter />
-        </div>
+        <MobileFooter />
       </section>
     </div>
   );

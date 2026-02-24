@@ -15,86 +15,11 @@ import {
   leadRemarksAction,
   createLeadRemak,
 } from "../../../app/utils/remakesActions";
-
-// Sample data for demonstration
-const sampleLeads = [
-  {
-    id: 1,
-    name: "Rajesh Kumar",
-    status: "Interested",
-    lastMessage: "When can I schedule a site visit?",
-    lastMessageTime: "10:30 AM",
-    unread: 2,
-    isBookmarked: true,
-    phone: "+91 98765 43210",
-  },
-  {
-    id: 2,
-    name: "Priya Sharma",
-    status: "Follow-up",
-    lastMessage: "Thanks for the quotation",
-    lastMessageTime: "Yesterday",
-    unread: 0,
-    isBookmarked: false,
-    phone: "+91 98765 43211",
-  },
-  {
-    id: 3,
-    name: "Amit Patel",
-    status: "Converted",
-    lastMessage: "Deal closed! Thank you",
-    lastMessageTime: "Yesterday",
-    unread: 0,
-    isBookmarked: true,
-    phone: "+91 98765 43212",
-  },
-  {
-    id: 4,
-    name: "Neha Gupta",
-    status: "New",
-    lastMessage: "Interested in luxury apartments",
-    lastMessageTime: "2 days ago",
-    unread: 1,
-    isBookmarked: false,
-    phone: "+91 98765 43213",
-  },
-];
-
-// Sample remarks/messages for selected lead
-const sampleRemarks = [
-  {
-    id: 1,
-    sender: "You",
-    message:
-      "Hi Rajesh, thanks for your interest. When would you like to visit?",
-    time: "10:32 AM",
-    isMe: true,
-  },
-  {
-    id: 2,
-    sender: "Rajesh Kumar",
-    message: "I'm free this Saturday around 11 AM. Is that available?",
-    time: "10:35 AM",
-    isMe: false,
-  },
-  {
-    id: 3,
-    sender: "You",
-    message: "Yes, Saturday 11 AM works. I'll send you the address.",
-    time: "10:38 AM",
-    isMe: true,
-  },
-  {
-    id: 4,
-    sender: "You",
-    message: "Here's the location: Sunrise Apartments, Whitefield",
-    time: "10:39 AM",
-    isMe: true,
-  },
-];
+import LeadStatus from "./LeadStatus";
 
 export default function LeadMessenger(props) {
   const { projectLeads } = props;
+  console.log("projectLeads--", projectLeads);
   const messagesEndRef = useRef(null);
 
   const {
@@ -110,7 +35,7 @@ export default function LeadMessenger(props) {
   const [messageInput, setMessageInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-
+  console.log("leadRemarks-", leadRemarks);
   const filteredLeads = projectLeads.filter((lead) =>
     lead.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
@@ -123,7 +48,7 @@ export default function LeadMessenger(props) {
   }, [selectedLeadMobile]);
 
   const handleLeadSelect = async (lead) => {
-    console.log("selectedid", lead);
+    console.log("selectedid--", lead);
     setSelectedLead(lead);
     // Add this line if you have setSelectedLeadMobile in context
     if (setSelectedLeadMobile) {
@@ -331,7 +256,7 @@ export default function LeadMessenger(props) {
                 {leadRemarks.map((remark) => (
                   <div
                     key={remark.id}
-                    className={`${styles.message_wrapper} ${remark.isMe ? styles.my_message : styles.their_message}`}
+                    className={`${styles.message_wrapper} ${remark.sender === "employee" ? styles.my_message : styles.their_message}`}
                   >
                     <div className={styles.message_bubble}>
                       <p className={styles.message_text}>{remark.message}</p>
@@ -365,7 +290,20 @@ export default function LeadMessenger(props) {
                     }}
                   />
                   <button className={styles.attach_btn}>
-                    <IoMdAttach />
+                    {/* Replace attach button with LeadStatus */}
+                    <LeadStatus
+                      leadId={selectedLead?.id}
+                      onStatusSelect={(status, leadId) => {
+                        console.log(
+                          "Status update:",
+                          status,
+                          "for lead:",
+                          leadId,
+                        );
+                        // Add your status update logic here using context API
+                        // You can use AppContext to update the status
+                      }}
+                    />
                   </button>
                   <button
                     className={styles.send_btn}

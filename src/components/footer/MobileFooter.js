@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import styles from "./mobilefooter.module.css";
 import { GoHome, GoProject, GoPerson } from "react-icons/go";

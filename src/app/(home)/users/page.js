@@ -1,9 +1,9 @@
 import React from "react";
+import UserLayout from "../../../components/user_layout/UserLayout";
 import { cookies } from "next/headers";
-import ProjectPageLayout from "../../../components/projects_page_layout/ProjectPageLayout";
-// import { dummyProjects } from "../../../jsonData/dummyData";
 import { API_BASE_URL } from "../../../../config";
-export default async function Projectspage() {
+
+export default async function Userpage() {
   // ✅ Get JWT cookie safely
   const cookieStore = await cookies();
   const token = cookieStore.get("jwt")?.value;
@@ -15,7 +15,7 @@ export default async function Projectspage() {
 
   try {
     // 1. First API - Fetch project employees (already done)
-    const response = await fetch(`${API_BASE_URL}/project/getmyProjects`, {
+    const response = await fetch(`${API_BASE_URL}/admin/getAllUsers`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,14 +31,16 @@ export default async function Projectspage() {
     const apiData = await response.json();
 
     if (apiData.status === "success") {
-      apiResult = apiData?.data;
+      apiResult = apiData;
     }
   } catch (error) {
-    console.log("errror--", error);
+    console.log("error----", error);
   }
+
+  console.log("apiResult users---", apiResult);
   return (
     <div>
-      <ProjectPageLayout apiData={apiResult} />
+      <UserLayout apiData={apiResult} />
     </div>
   );
 }

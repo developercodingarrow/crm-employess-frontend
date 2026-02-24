@@ -8,8 +8,8 @@ export default function CreateLeadForm({ onAddLead }) {
     name: "",
     phone: "",
     email: "",
-    source: "Website",
-    status: "New",
+    source: "",
+    status: "",
   });
 
   const sources = [

@@ -1,0 +1,22 @@
+.page_topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1rem;
+  border-bottom: var(--th-light-gray-border);
+  width: 100%;
+}
+
+.page_title {
+  font-size: var(--th-D-title-font-size);
+  font-weight: var(--th-D-title-font-weight);
+  color: var(--th-bold-text-color);
+  margin: 0 0 4px 0;
+  letter-spacing: -0.5px;
+}
+
+.page_subtitle {
+  font-size: 14px;
+  color: var(--th-light-text-color);
+  margin: 0;
+}

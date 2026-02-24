@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./leadpageLayout.module.css";
 import { GoPlus, GoFilter, GoSearch, GoUpload } from "react-icons/go";
 import { dummyLeads } from "../../jsonData/dummyData";
@@ -7,12 +7,17 @@ import LeadCard from "./lead_card/LeadCard";
 import BulkUpload from "./Bulk_lead_Upload/BulkUpload";
 import CreateLeadForm from "./Create_Lead_Form/CreateLeadForm";
 import { createNewLead } from "../../app/utils/adminAction";
+import { AppContext } from "../../_contextApi/AppContextProvider";
+import LeadUploadModel from "./lead_upload_model/LeadUploadModel";
+import MobileFooter from "../footer/MobileFooter";
+import HeaderTopBar from "../elements/header_top_bar/HeaderTopBar";
 
 export default function LeadsPageLayout(props) {
+  const { showCreateForm, setShowCreateForm, openLeadForm } =
+    useContext(AppContext);
   const { apiLead } = props;
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSource, setSelectedSource] = useState("All");
-  const [showCreateForm, setShowCreateForm] = useState(true); // Toggle between form and bulk upload
   const [leads, setLeads] = useState(apiLead);
 
   const sources = [
@@ -72,16 +77,19 @@ export default function LeadsPageLayout(props) {
   return (
     <div className={styles.main_container}>
       <div className={styles.page_header}>
-        <h1 className={styles.page_title}>Leads Management</h1>
-        <p className={styles.page_subtitle}>
-          Manage and track your leads efficiently
-        </p>
+        <HeaderTopBar
+          pageTitle="Leads Management"
+          pageSubtitle=" Manage and track your leads efficiently"
+          btnText="Create Lead"
+          btnClickHandel={openLeadForm}
+        />
       </div>
 
       <div className={styles.inner_container}>
         {/* Left Column - Leads List */}
         <div className={styles.leads_column}>
           {/* Search and Filter Bar */}
+
           <div className={styles.search_filter_container}>
             <div className={styles.search_wrapper}>
               <GoSearch className={styles.search_icon} />
@@ -175,7 +183,14 @@ export default function LeadsPageLayout(props) {
             )}
           </div>
         </div>
+        <LeadUploadModel
+          handleAddLead={handleAddLead}
+          handleBulkUpload={handleBulkUpload}
+        />
       </div>
+      <section className={styles.footer_wrapper}>
+        <MobileFooter />
+      </section>
     </div>
   );
 }

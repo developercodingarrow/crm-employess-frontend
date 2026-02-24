@@ -162,7 +162,7 @@ export default function LoginForm() {
         <p className={styles.demo_title}>Demo Credentials</p>
         <div className={styles.demo_item}>
           <span className={styles.demo_label}>Email:</span>
-          <span className={styles.demo_value}>amit.desai@company.com</span>
+          <span className={styles.demo_value}>admin@gmail.com</span>
         </div>
         <div className={styles.demo_item}>
           <span className={styles.demo_label}>Password:</span>

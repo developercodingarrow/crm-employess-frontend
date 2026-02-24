@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./projectleadlayout.module.css";
 import { GoPlus, GoFilter } from "react-icons/go";
 import LeadMessenger from "./lead messenger/LeadMessenger";
+import MobileFooter from "../footer/MobileFooter";
 export default function ProjectLeadLayout(props) {
   const { projectLeads, satats } = props;
   return (
@@ -26,6 +27,10 @@ export default function ProjectLeadLayout(props) {
 
       <section>
         <LeadMessenger projectLeads={projectLeads} />
+      </section>
+
+      <section className={styles.footer_wrapper}>
+        <MobileFooter />
       </section>
     </div>
   );
