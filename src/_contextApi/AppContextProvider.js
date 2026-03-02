@@ -10,6 +10,7 @@ export default function AppContextProvider({ children }) {
   const [isUserFormOpen, setIsUserFormOpen] = useState(false); // Add this
   const [isLeadUplodOpen, setisLeadUplodOpen] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(true); // Toggle between form and bulk upload
+  const [isRecentActiviriesOpen, setisRecentActiviriesOpen] = useState(false);
 
   const toggleFilter = () => {
     setIsFilterOpen(!isFillterOpen);
@@ -33,6 +34,14 @@ export default function AppContextProvider({ children }) {
   const closeUserForm = () => setIsUserFormOpen(false); // Add this
   const openLeadForm = () => setisLeadUplodOpen(true); // Add this
   const closeLeadForm = () => setisLeadUplodOpen(false); // Add this
+  const handelOpenrecentActivity = () => {
+    setisRecentActiviriesOpen(true);
+  };
+
+  const handelCloserecentActivity = () => {
+    setisRecentActiviriesOpen(false);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -54,6 +63,10 @@ export default function AppContextProvider({ children }) {
         closeLeadForm,
         showCreateForm,
         setShowCreateForm,
+        isRecentActiviriesOpen,
+        setisRecentActiviriesOpen,
+        handelOpenrecentActivity,
+        handelCloserecentActivity,
       }}
     >
       {children}

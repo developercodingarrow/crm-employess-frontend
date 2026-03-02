@@ -124,6 +124,7 @@
   cursor: default;
   position: relative;
   overflow: hidden;
+  text-transform: capitalize;
 }
 
 .user_role::before {

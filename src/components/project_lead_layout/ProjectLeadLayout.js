@@ -3,10 +3,12 @@ import styles from "./projectleadlayout.module.css";
 import { GoPlus, GoFilter } from "react-icons/go";
 import LeadMessenger from "./lead messenger/LeadMessenger";
 import MobileFooter from "../footer/MobileFooter";
+import ReminderForm from "../elements/reminder_form/ReminderForm";
 export default function ProjectLeadLayout(props) {
   const { projectLeads, satats } = props;
   return (
     <div className={styles.main_container}>
+      <ReminderForm />
       <section className={styles.pageHeader_section}>
         <div className={styles.page_topBar}>
           <div className={styles.page_title}>Royal Gardens</div>

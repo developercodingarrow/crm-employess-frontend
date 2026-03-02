@@ -1,0 +1,346 @@
+/* Reminders Card */
+.remindersCard {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e9ecef;
+  height: fit-content;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.remindersHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e9ecef;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 1;
+}
+
+.remindersHeader h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.remindersIcon {
+  color: #3b82f6;
+  font-size: 18px;
+}
+
+.remindersCount {
+  background: #3b82f6;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.remindersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reminderItem {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.reminderItem:hover {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateX(2px);
+}
+
+.reminderTime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.timeBig {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.timeLeft {
+  font-size: 11px;
+  color: #10b981;
+  background: #e0f7e9;
+  padding: 2px 8px;
+  border-radius: 30px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.timeLeft.overdue {
+  background: #fee9e9;
+  color: #ef4444;
+}
+
+.reminderContent {
+  flex: 1;
+}
+
+.reminderHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.leadName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.priorityBadge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 30px;
+  text-transform: uppercase;
+}
+
+.reminderMessage {
+  font-size: 13px;
+  color: #475569;
+  margin: 4px 0 8px 0;
+  line-height: 1.4;
+}
+
+.reminderFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reminderType {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #64748b;
+  text-transform: capitalize;
+}
+
+.typeIcon {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.leadStatus {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 30px;
+}
+
+.notificationDot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #3b82f6;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.viewAllLink {
+  display: inline-block;
+  font-size: 13px;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.viewAllLink:hover {
+  color: #2563eb;
+  transform: translateX(4px);
+}
+
+.divider {
+  margin: 20px 0 12px 0;
+  position: relative;
+  text-align: center;
+}
+
+.divider span {
+  background: #ffffff;
+  padding: 0 12px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e9ecef;
+  z-index: 0;
+}
+
+.notifiedItem {
+  opacity: 0.7;
+  background: #f8fafc;
+  position: relative;
+}
+
+.notifiedBadge {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: #e9ecef;
+  color: #64748b;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.deleteBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.reminderItem:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+.clearAllBtn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  background: #f1f5f9;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearAllBtn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.emptyMessage {
+  text-align: center;
+  padding: 24px;
+  color: #94a3b8;
+  font-size: 14px;
+  background: #f8fafc;
+  border-radius: 12px;
+}
+
+/* Add to your reminders.module.css */
+
+.reminderItem {
+  /* ... existing styles ... */
+  transition: all 0.3s ease;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reminderItem.deleting {
+  animation: slideOut 0.3s ease forwards;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+@keyframes slideOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+
+.deleteBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.deleteBtn:disabled:hover {
+  background: transparent;
+  color: #94a3b8;
+  transform: none;
+}
+
+.clearAllBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.clearAllBtn:disabled:hover {
+  background: #f1f5f9;
+  color: #64748b;
+  border-color: #e9ecef;
+}

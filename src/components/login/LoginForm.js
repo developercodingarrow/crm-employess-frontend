@@ -32,7 +32,7 @@ export default function LoginForm() {
       if (result.status === "success") {
         document.cookie = `jwt=${result.token}; path=/; max-age=86400;`; // 1 day
         document.cookie = `user=${JSON.stringify(
-          result.data._id,
+          result.data,
         )}; path=/; max-age=86400;`;
 
         router.push("/"); // Redirect to dashboard

@@ -1,5 +1,6 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation"; // Import router
 import styles from "./leadmessenger.module.css";
 import {
   GoSearch,
@@ -9,6 +10,8 @@ import {
   GoSmiley,
 } from "react-icons/go";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { GiAlarmClock } from "react-icons/gi";
+import { IoMdArrowBack } from "react-icons/io";
 import { IoMdAttach } from "react-icons/io";
 import { AppContext } from "../../../_contextApi/AppContextProvider";
 import {
@@ -16,12 +19,15 @@ import {
   createLeadRemak,
 } from "../../../app/utils/remakesActions";
 import LeadStatus from "./LeadStatus";
+import { ReminderContext } from "../../../_contextApi/ReminderContextProvider";
+import { changeLeadStatusAction } from "../../../app/utils/leadActions";
 
 export default function LeadMessenger(props) {
+  const router = useRouter(); // Initialize router
   const { projectLeads } = props;
-  console.log("projectLeads--", projectLeads);
   const messagesEndRef = useRef(null);
-
+  const messagesContainerRef = useRef(null);
+  const { handelOpenReminderForm } = useContext(ReminderContext);
   const {
     isMobileChatOpen,
     openMobileChat,
@@ -35,7 +41,7 @@ export default function LeadMessenger(props) {
   const [messageInput, setMessageInput] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
-  console.log("leadRemarks-", leadRemarks);
+
   const filteredLeads = projectLeads.filter((lead) =>
     lead.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
@@ -47,10 +53,16 @@ export default function LeadMessenger(props) {
     }
   }, [selectedLeadMobile]);
 
+  useEffect(() => {
+    if (messagesContainerRef.current) {
+      // Scroll the container, not the whole page
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  }, [leadRemarks]);
+
   const handleLeadSelect = async (lead) => {
-    console.log("selectedid--", lead);
     setSelectedLead(lead);
-    // Add this line if you have setSelectedLeadMobile in context
     if (setSelectedLeadMobile) {
       setSelectedLeadMobile(lead);
     }
@@ -61,7 +73,7 @@ export default function LeadMessenger(props) {
 
     try {
       const res = await leadRemarksAction(lead.id);
-      console.log("res-leads selection", res);
+
       setSelectedLead(res.data.data.lead);
       setleadRemarks(res.data.data.remarks);
     } catch (error) {
@@ -69,27 +81,17 @@ export default function LeadMessenger(props) {
     }
   };
 
-  // Auto-scroll to top when new message arrives
-  // Auto-scroll to bottom when new message arrives
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [leadRemarks]); // This runs whenever leadRemarks changes
-
   const handelCreatenewRemark = async (leadID) => {
     setIsSending(true);
     try {
       const remarks = messageInput;
       const payload = { remarks };
-      console.log("leadID---", leadID);
-      console.log("payload--", payload);
       const res = await createLeadRemak(payload, leadID);
-      console.log("res--", res);
+
       // ✅ Transform the response to match your leadRemarks format
       if (res.data.status === "success") {
         const newRemark = res.data.data.remark;
-        console.log("res---", res.data);
+
         // Transform to match your UI format
         const transformedRemark = {
           id: newRemark.id,
@@ -109,8 +111,34 @@ export default function LeadMessenger(props) {
         setIsSending(false);
       }
     } catch (error) {
-      console.log("error---", error);
       setIsSending(false);
+    }
+  };
+
+  const handleStatusChange = async (newStatus, leadId) => {
+    const formData = {
+      status: newStatus,
+    };
+
+    try {
+      const res = await changeLeadStatusAction(formData, leadId);
+
+      if (res.data.status === "success") {
+        const transformedRemark = {
+          id: res.data.data.remark.id,
+          sender: "You", // Since current user created it
+          message: res.data.data.remark.remarks,
+          time: "just now", // You need to create this function
+          isMe: true,
+        };
+        // ✅ Correct - adds to BOTTOM (end of array)
+        setleadRemarks((prevRemarks) => [...prevRemarks, transformedRemark]);
+        // Force re-render
+        setRefreshTrigger((prev) => prev + 1);
+        router.refresh(); // This refreshes server components
+      }
+    } catch (error) {
+      console.log("error--", error);
     }
   };
 
@@ -218,7 +246,7 @@ export default function LeadMessenger(props) {
                     className={`${styles.mobile_back_btn} ${isMobileChatOpen ? styles.show : ""}`}
                     onClick={closeMobileChat}
                   >
-                    ← {/* You can use text or icon */}
+                    <IoMdArrowBack />
                   </button>
                   <div className={styles.user_avatar}>
                     <GoPerson />
@@ -242,11 +270,13 @@ export default function LeadMessenger(props) {
                   </div>
                 </div>
                 <div className={styles.conversation_actions}>
-                  <button className={styles.action_btn}>
-                    <GoBookmark />
-                  </button>
-                  <button className={styles.action_btn}>
-                    <BsThreeDotsVertical />
+                  <button
+                    className={styles.action_btn}
+                    onClick={() =>
+                      handelOpenReminderForm(selectedLead.id, selectedLead.name)
+                    }
+                  >
+                    <GiAlarmClock />
                   </button>
                 </div>
               </div>
@@ -255,6 +285,7 @@ export default function LeadMessenger(props) {
               <div className={styles.messages_area}>
                 {leadRemarks.map((remark) => (
                   <div
+                    ref={messagesContainerRef}
                     key={remark.id}
                     className={`${styles.message_wrapper} ${remark.sender === "employee" ? styles.my_message : styles.their_message}`}
                   >
@@ -289,22 +320,13 @@ export default function LeadMessenger(props) {
                       }
                     }}
                   />
-                  <button className={styles.attach_btn}>
+                  <div className={styles.attach_btn}>
                     {/* Replace attach button with LeadStatus */}
                     <LeadStatus
                       leadId={selectedLead?.id}
-                      onStatusSelect={(status, leadId) => {
-                        console.log(
-                          "Status update:",
-                          status,
-                          "for lead:",
-                          leadId,
-                        );
-                        // Add your status update logic here using context API
-                        // You can use AppContext to update the status
-                      }}
+                      onStatusSelect={handleStatusChange}
                     />
-                  </button>
+                  </div>
                   <button
                     className={styles.send_btn}
                     onClick={(e) => handelCreatenewRemark(selectedLead.id)}

@@ -1,17 +1,30 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./mobilefooter.module.css";
-import { GoHome, GoProject, GoPerson } from "react-icons/go";
+import {
+  GoHome,
+  GoProject,
+  GoPerson,
+  GoClock,
+  GoGraph,
+  GoBell,
+} from "react-icons/go";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AppContext } from "../../_contextApi/AppContextProvider";
 
 export default function MobileFooter() {
   const pathname = usePathname();
+  const {
+    isRecentActiviriesOpen,
+    setisRecentActiviriesOpen,
+    handelOpenrecentActivity,
+    handelCloserecentActivity,
+  } = useContext(AppContext);
 
   const menuItems = [
     { id: 1, name: "Home", href: "/", icon: <GoHome /> },
     { id: 2, name: "Projects", href: "/projects", icon: <GoProject /> },
-    { id: 3, name: "Profile", href: "/profile", icon: <GoPerson /> },
   ];
 
   return (
@@ -29,6 +42,22 @@ export default function MobileFooter() {
             <span className={styles.label}>{item.name}</span>
           </Link>
         ))}
+        <div className={`${styles.footer_item}`}>
+          <span className={styles.icon}>
+            {" "}
+            <GoClock />{" "}
+          </span>
+          <span className={styles.label}>Reminders</span>
+        </div>
+        <div
+          className={`${styles.footer_item}`}
+          onClick={handelOpenrecentActivity}
+        >
+          <span className={styles.icon}>
+            <GoGraph />
+          </span>
+          <span className={styles.label}>Activity</span>
+        </div>
       </div>
     </div>
   );

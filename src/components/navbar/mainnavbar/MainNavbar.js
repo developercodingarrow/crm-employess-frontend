@@ -6,7 +6,10 @@ import logoImg from "../../../../public/layer-thick-icon.png";
 import { GoBell } from "react-icons/go";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-export default function MainNavbar() {
+
+export default function MainNavbar(props) {
+  const { userRole } = props;
+  console.log(userRole);
   const pathname = usePathname();
   const navigationItems = [
     { id: 1, name: "Home", href: "/" },
@@ -46,7 +49,7 @@ export default function MainNavbar() {
           </div>
         </div>
         <div className={styles.right_column}>
-          <div className={styles.user_role}>Admin</div>
+          <div className={styles.user_role}>{userRole}</div>
           <div className={styles.notification}>
             <GoBell />
             <span className={styles.notification_badge}>3</span>

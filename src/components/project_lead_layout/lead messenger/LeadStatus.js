@@ -29,20 +29,9 @@ export default function LeadStatus({ onStatusSelect, leadId }) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleStatusClick = async (status) => {
-    console.log("Selected Status:", status, "for Lead ID:", leadId);
+  const handelstatus = (status) => {
     onStatusSelect(status, leadId);
     setIsOpen(false);
-    const formData = {
-      status: status,
-    };
-    console.log("formData--", formData);
-    try {
-      const res = await changeLeadStatusAction(formData, leadId);
-      console.log("res---", res);
-    } catch (error) {
-      console.log("error--", error);
-    }
   };
 
   return (
@@ -62,7 +51,7 @@ export default function LeadStatus({ onStatusSelect, leadId }) {
             <div
               key={status}
               className={styles.status_option}
-              onClick={() => handleStatusClick(status)}
+              onClick={() => handelstatus(status)}
             >
               <span
                 className={styles.status_dot}

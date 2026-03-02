@@ -1,0 +1,40 @@
+.statusItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #475569;
+  min-width: 100px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 30px;
+}
+
+.statusBar {
+  flex: 1;
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.statusBar div {
+  height: 100%;
+  border-radius: 3px;
+}

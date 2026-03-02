@@ -12,16 +12,52 @@ import {
   GoSignOut,
 } from "react-icons/go";
 
-export default function Asidebar() {
+export default function Asidebar(props) {
   const pathname = usePathname();
+  const { userRole } = props;
 
-  const navigationItems = [
-    { id: 1, name: "Dashboard", href: "/", icon: <GoHome /> },
-    { id: 2, name: "Projects", href: "/projects", icon: <GoProject /> },
-    { id: 3, name: "Leads", href: "/leads", icon: <GoPeople /> },
-    { id: 4, name: "Reports", href: "/reports", icon: <GoGraph /> },
-    { id: 5, name: "Users", href: "/users", icon: <GoPeople /> },
+  const allNavigationItems = [
+    {
+      id: 1,
+      name: "Dashboard",
+      href: "/",
+      icon: <GoHome />,
+      roles: ["employee", "admin"],
+    },
+    {
+      id: 2,
+      name: "Projects",
+      href: "/projects",
+      icon: <GoProject />,
+      roles: ["employee", "admin"],
+    },
+    {
+      id: 3,
+      name: "Leads",
+      href: "/leads",
+      icon: <GoPeople />,
+      roles: ["admin"],
+    },
+    {
+      id: 4,
+      name: "Reports",
+      href: "/reports",
+      icon: <GoGraph />,
+      roles: ["admin"],
+    },
+    {
+      id: 5,
+      name: "Users",
+      href: "/users",
+      icon: <GoPeople />,
+      roles: ["admin"],
+    },
   ];
+
+  // Filter items based on user role
+  const navigationItems = allNavigationItems.filter((item) =>
+    item.roles.includes(userRole),
+  );
 
   const handleLogout = () => {
     // Add your logout logic here
