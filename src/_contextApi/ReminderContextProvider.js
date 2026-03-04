@@ -12,10 +12,10 @@ export default function ReminderContextProvider({ children }) {
   const [showReminderForm, setShowReminderForm] = useState(false);
   const [leadId, setLeadId] = useState("");
   const [leadName, setleadName] = useState("");
+  const [isOpenReminder, setisOpenReminder] = useState(false);
 
   // NEW: Function to open form with leadId
   const handelOpenReminderForm = useCallback((id, selectedname) => {
-    console.log("Opening reminder form for lead:", id);
     setLeadId(id);
     setleadName(selectedname);
     setShowReminderForm(true);
@@ -42,8 +42,6 @@ export default function ReminderContextProvider({ children }) {
         secondsDiff >= 0 &&
         !notifiedReminders.has(reminder._id)
       ) {
-        console.log("🎯 Reminder triggered:", reminder);
-
         // Add to queue
         setReminderQueue((prev) => {
           if (!prev.some((r) => r._id === reminder._id)) {
@@ -110,12 +108,6 @@ export default function ReminderContextProvider({ children }) {
   // NEW: Function to create a test reminder
   const createTestReminder = useCallback(async (reminderData) => {
     try {
-      console.log("📝 Creating test reminder:", reminderData);
-
-      // For now, just log to console
-      // Later we'll connect to your API
-      console.log("Reminder created successfully!");
-
       // Optional: Add to queue for testing
       const testReminder = {
         _id: "test-" + Date.now(),
@@ -132,6 +124,14 @@ export default function ReminderContextProvider({ children }) {
       return { success: false, error };
     }
   }, []);
+
+  const handelCloseReminders = () => {
+    setisOpenReminder(false);
+  };
+
+  const handelOpenReminders = () => {
+    setisOpenReminder(true);
+  };
 
   return (
     <ReminderContext.Provider
@@ -150,6 +150,10 @@ export default function ReminderContextProvider({ children }) {
         dismissReminder,
         snoozeReminder,
         createTestReminder,
+        isOpenReminder,
+        setisOpenReminder,
+        handelCloseReminders,
+        handelOpenReminders,
       }}
     >
       {children}

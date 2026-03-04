@@ -13,6 +13,7 @@ export default async function page({ params }) {
   const { slug } = await params;
   let projectLeads = [];
   let leadStats;
+  let project;
 
   try {
     // 1. First API - Fetch project Leads (already done)
@@ -35,13 +36,18 @@ export default async function page({ params }) {
     const data = await response.json();
 
     if (data.status === "success") {
+      project = data?.data?.project;
       projectLeads = data?.data?.leads;
       leadStats = data?.data?.statistics;
     }
   } catch (error) {}
   return (
     <div>
-      <ProjectLeadLayout projectLeads={projectLeads} satats={leadStats} />
+      <ProjectLeadLayout
+        project={project}
+        projectLeads={projectLeads}
+        satats={leadStats}
+      />
     </div>
   );
 }

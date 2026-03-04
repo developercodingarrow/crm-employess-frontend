@@ -25,3 +25,26 @@
   font-weight: 500;
   color: var(--th-light-text-color);
 }
+
+@media screen and (max-width: 768px) {
+  .stat_box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px;
+    background-color: transparent;
+    border-radius: 15px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .stat_number {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .stat_label {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}

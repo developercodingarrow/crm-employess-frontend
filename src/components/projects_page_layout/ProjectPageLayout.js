@@ -2,7 +2,6 @@
 import React, { useContext } from "react";
 import styles from "./projectpagelayout.module.css";
 import { GoPlus, GoFilter } from "react-icons/go";
-
 import Searchbar from "../elements/searchbar/Searchbar";
 import ProjectCard from "../elements/cards/ProjectCard";
 import useFillters from "../../_custome_hooks/useFillters";
@@ -68,6 +67,7 @@ export default function ProjectPageLayout(props) {
           </div>
         </div>
       </div>
+
       <section className={styles.inner_container}>
         <div className={styles.sidefillter_wrapper}>
           <FillterBar

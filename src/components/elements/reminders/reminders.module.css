@@ -1,12 +1,20 @@
 /* Reminders Card */
 .remindersCard {
   background: white;
-  padding: 20px;
+  padding: 0px 2rem;
   border-radius: 16px;
   border: 1px solid #e9ecef;
   height: fit-content;
   max-height: 600px;
   overflow-y: auto;
+}
+
+.wrapper_container {
+  background-color: #fff;
+  padding-top: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .remindersHeader {

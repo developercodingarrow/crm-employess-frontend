@@ -4,19 +4,37 @@ import { AppContext } from "../../_contextApi/AppContextProvider";
 import styles from "./modelStyle.module.css";
 import { IoMdClose } from "react-icons/io";
 import { GoGraph } from "react-icons/go";
+import { myRecentActivitiesCtion } from "../../app/utils/statsActions";
+import RecentLeadActivity from "../elements/recent_lead_activity/RecentLeadActivity";
 
 export default function RecentActivitiesModel() {
   const { isRecentActiviriesOpen, handelCloserecentActivity } =
     useContext(AppContext);
+  const [recentactivities, setrecentactivities] = useState([]);
 
   const [shouldRender, setShouldRender] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+
+  const handelget = async () => {
+    try {
+      const res = await myRecentActivitiesCtion();
+      console.log("recentactivites-res", res.data);
+
+      if (res.data.status === "success") {
+        console.log("recentactivites-res", res.data.data.activities);
+        setrecentactivities(res.data.data.activities);
+      }
+    } catch (error) {
+      console.log("error-", error);
+    }
+  };
 
   // Handle open/close animations
   useEffect(() => {
     if (isRecentActiviriesOpen) {
       setShouldRender(true);
       setIsClosing(false);
+      handelget();
     } else {
       setIsClosing(true);
       // Wait for animation to complete before removing from DOM
@@ -58,10 +76,15 @@ export default function RecentActivitiesModel() {
 
         {/* Modal Body - We'll add RecentActivity component here later */}
         <div className={styles.body}>
-          <p className={styles.placeholder}>
-            Your recent activities will appear here
-          </p>
-          {/* <RecentActivity data={activities} /> */}
+          {/* Recent Activity */}
+          <div className={styles.activityCard}>
+            <h3>Recent Activity</h3>
+            <div className={styles.activityList}>
+              {recentactivities?.map((item, index) => {
+                return <RecentLeadActivity key={item.id} item={item} />;
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Modal Footer */}

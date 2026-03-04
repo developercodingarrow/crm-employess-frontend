@@ -12,15 +12,12 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AppContext } from "../../_contextApi/AppContextProvider";
+import { ReminderContext } from "../../_contextApi/ReminderContextProvider";
 
 export default function MobileFooter() {
   const pathname = usePathname();
-  const {
-    isRecentActiviriesOpen,
-    setisRecentActiviriesOpen,
-    handelOpenrecentActivity,
-    handelCloserecentActivity,
-  } = useContext(AppContext);
+  const { handelOpenrecentActivity } = useContext(AppContext);
+  const { handelOpenReminders } = useContext(ReminderContext);
 
   const menuItems = [
     { id: 1, name: "Home", href: "/", icon: <GoHome /> },
@@ -42,7 +39,7 @@ export default function MobileFooter() {
             <span className={styles.label}>{item.name}</span>
           </Link>
         ))}
-        <div className={`${styles.footer_item}`}>
+        <div className={`${styles.footer_item}`} onClick={handelOpenReminders}>
           <span className={styles.icon}>
             {" "}
             <GoClock />{" "}

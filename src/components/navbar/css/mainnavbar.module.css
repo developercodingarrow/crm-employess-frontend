@@ -202,6 +202,203 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.notification_wrapper {
+  position: relative;
+}
+
+.notification {
+  position: relative;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.notification:hover {
+  background: #f1f5f9;
+}
+
+.notification_badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ef4444;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid white;
+}
+
+/* Dropdown Menu */
+.dropdown_menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  width: 320px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  z-index: 1000;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.dropdown_header h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.dropdown_count {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3b82f6;
+  background: #e6f0ff;
+  padding: 2px 8px;
+  border-radius: 30px;
+}
+
+.dropdown_body {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.notification_item {
+  padding: 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.notification_item:hover {
+  background: #f8fafc;
+}
+
+.notification_content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notification_message {
+  font-size: 13px;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.notification_time {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* No Notifications State */
+.no_notifications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.no_notif_icon {
+  font-size: 32px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.no_notifications p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+  margin: 0 0 4px 0;
+}
+
+.no_notifications span {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Dropdown Footer */
+.dropdownLink_footer {
+  padding: 12px 16px;
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+}
+
+.dropdownclick_footer {
+  display: none;
+}
+
+.view_all_link {
+  color: #3b82f6;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.view_all_link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .dropdown_menu {
+    position: fixed;
+    top: auto;
+    bottom: 75;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .dropdown_body {
+    max-height: 50vh;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .main_container {
     height: 60px; /* Smaller navbar on mobile */
@@ -266,5 +463,16 @@
   /* Reduce gap between right column items */
   .right_column {
     gap: 12px;
+  }
+  .dropdownLink_footer {
+    display: none;
+  }
+
+  .dropdownclick_footer {
+    display: flex;
+    justify-content: center;
+    padding: 12px 16px;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
   }
 }

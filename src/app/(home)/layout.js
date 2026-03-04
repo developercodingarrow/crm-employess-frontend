@@ -4,6 +4,7 @@ import ReminderContextProvider from "../../_contextApi/ReminderContextProvider";
 import ReminderPopup from "../../components/home_dashbord/Reminder_Popup/ReminderPopup";
 import MainUILayout from "../../components/layouts/MainUILayout";
 import RecentActivitiesModel from "../../components/models/RecentActivitiesModel";
+import ReminderModel from "../../components/models/ReminderModel";
 import MainNavbar from "../../components/navbar/mainnavbar/MainNavbar";
 import "../globals.css";
 import { Inter } from "next/font/google";
@@ -32,7 +33,6 @@ export default async function HomeLayout({ children }) {
       try {
         loginUser = JSON.parse(loginUserString);
       } catch (parseError) {
-        console.log("Invalid user cookie format:", parseError);
         // Clear invalid cookie
         // You might want to handle this differently
       }
@@ -48,6 +48,7 @@ export default async function HomeLayout({ children }) {
             <FillterContextProvider>
               <ReminderPopup />
               <RecentActivitiesModel />
+              <ReminderModel />
               <MainUILayout loginUser={loginUser}>{children}</MainUILayout>
             </FillterContextProvider>
           </ReminderContextProvider>
@@ -55,7 +56,6 @@ export default async function HomeLayout({ children }) {
       </div>
     );
   } catch (error) {
-    console.log("Layout error:", error);
     redirect("/login");
   }
 }

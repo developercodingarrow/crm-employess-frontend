@@ -12,12 +12,9 @@ import { BsFillBellFill } from "react-icons/bs";
 
 export default function Reminders(props) {
   const { reminders, onDeleteReminder, onclearAllReminder, deletingId } = props;
-
   // Separate reminders into active and notified
   const activeReminders = reminders.filter((r) => !r.isNotified);
   const notifiedReminders = reminders.filter((r) => r.isNotified);
-
-  console.log("reminders--", reminders);
 
   // Helper function to format time
   const formatReminderTime = (timestamp) => {
@@ -74,14 +71,16 @@ export default function Reminders(props) {
   return (
     <div>
       <div className={styles.remindersCard}>
-        <div className={styles.remindersHeader}>
-          <h3>
-            <MdNotificationsActive className={styles.remindersIcon} />
-            Upcoming Reminders
-          </h3>
-          <span className={styles.remindersCount}>
-            {activeReminders.length}
-          </span>
+        <div className={styles.wrapper_container}>
+          <div className={styles.remindersHeader}>
+            <h3>
+              <MdNotificationsActive className={styles.remindersIcon} />
+              Upcoming Reminders
+            </h3>
+            <span className={styles.remindersCount}>
+              {activeReminders.length}
+            </span>
+          </div>
         </div>
 
         {/* Active Reminders (isNotified: false) */}

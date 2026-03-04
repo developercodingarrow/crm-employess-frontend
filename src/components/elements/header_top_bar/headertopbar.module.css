@@ -8,15 +8,27 @@
 }
 
 .page_title {
-  font-size: var(--th-D-title-font-size);
-  font-weight: var(--th-D-title-font-weight);
-  color: var(--th-bold-text-color);
-  margin: 0 0 4px 0;
-  letter-spacing: -0.5px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
 }
 
 .page_subtitle {
-  font-size: 14px;
-  color: var(--th-light-text-color);
+  color: #64748b;
+  font-size: 16px;
   margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .page_title {
+    font-size: 18px;
+    margin: 0 0 4px 0;
+  }
+
+  .page_subtitle {
+    color: #64748b;
+    font-size: 12px;
+    margin: 0;
+  }
 }

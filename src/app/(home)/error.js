@@ -6,8 +6,6 @@ import styles from "./error.module.css";
 import { GoAlert, GoHome } from "react-icons/go";
 
 export default function PageError({ error, reset }) {
-  console.log("error--", error);
-
   useEffect(() => {
     // Log the error to an error reporting service
     console.error("Home page error:", error);

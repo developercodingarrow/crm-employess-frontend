@@ -1,18 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./homedashbord.module.css";
-import {
-  GoGraph,
-  GoPeople,
-  GoProject,
-  GoCheckCircle,
-  GoClock,
-  GoCalendar,
-  GoStar,
-  GoEye,
-  GoArrowUp,
-  GoArrowDown,
-} from "react-icons/go";
+
 import { MdOutlineLeaderboard, MdOutlineTrendingUp } from "react-icons/md";
 // Add this to your HomeDashbord component
 import { IoMdAlert, IoMdCall, IoMdMail, IoMdPeople } from "react-icons/io";
@@ -29,10 +18,11 @@ import {
 import StatsBarItem from "../elements/stats_bar_item/StatsBarItem";
 import RecentLeadActivity from "../elements/recent_lead_activity/RecentLeadActivity";
 import MobileFooter from "../footer/MobileFooter";
+import StatsCard from "../elements/Stats_card/StatsCard";
+import { AppContext } from "../../_contextApi/AppContextProvider";
 
 export default function HomeDashbord(props) {
   const { loginUser, remindersData, statsData } = props;
-  console.log("statsData--", statsData);
 
   const { checkReminders } = useContext(ReminderContext);
   const [reminders, setreminders] = useState(remindersData?.reminders || []);
@@ -98,73 +88,37 @@ export default function HomeDashbord(props) {
 
       {/* Stats Cards Row */}
       <div className={styles.statsGrid}>
-        <div className={styles.statCard}>
-          <div
-            className={styles.statIcon}
-            style={{ background: "#e6f0ff", color: "#3b82f6" }}
-          >
-            <GoProject />
-          </div>
-          <div className={styles.statInfo}>
-            <span className={styles.statValue}>
-              {statsData?.summary?.totalProjects}{" "}
-            </span>
-            <span className={styles.statLabel}>Total Projects</span>
-          </div>
-          <div className={styles.statTrend}>
-            <GoArrowUp /> +12%
-          </div>
-        </div>
+        <StatsCard
+          statValue={statsData?.summary?.totalProjects}
+          statLabel="Total Projects"
+          icon="project"
+          bgColor="#e6f0ff"
+          iconColor="#3b82f6"
+        />
 
-        <div className={styles.statCard}>
-          <div
-            className={styles.statIcon}
-            style={{ background: "#e0f7e9", color: "#10b981" }}
-          >
-            <GoPeople />
-          </div>
-          <div className={styles.statInfo}>
-            <span className={styles.statValue}>
-              {statsData?.summary?.totalLeads}{" "}
-            </span>
-            <span className={styles.statLabel}>Total Leads</span>
-          </div>
-          <div className={styles.statTrend}>
-            <GoArrowUp /> +8%
-          </div>
-        </div>
+        <StatsCard
+          statValue={statsData?.summary?.totalLeads}
+          statLabel="Total Leads"
+          icon="people"
+          bgColor="#e0f7e9"
+          iconColor="#10b981"
+        />
 
-        <div className={styles.statCard}>
-          <div
-            className={styles.statIcon}
-            style={{ background: "#fff3e0", color: "#f59e0b" }}
-          >
-            <GoCheckCircle />
-          </div>
-          <div className={styles.statInfo}>
-            <span className={styles.statValue}>42</span>
-            <span className={styles.statLabel}>Converted</span>
-          </div>
-          <div className={styles.statTrend}>
-            <GoArrowDown /> -3%
-          </div>
-        </div>
+        <StatsCard
+          statValue={statsData?.summary?.conversionRate}
+          statLabel="Conversion Rate"
+          icon="checkcircle"
+          bgColor="#f3e8ff"
+          iconColor="#8b5cf6"
+        />
 
-        <div className={styles.statCard}>
-          <div
-            className={styles.statIcon}
-            style={{ background: "#fee9e9", color: "#ef4444" }}
-          >
-            <GoClock />
-          </div>
-          <div className={styles.statInfo}>
-            <span className={styles.statValue}>18</span>
-            <span className={styles.statLabel}>Follow-ups</span>
-          </div>
-          <div className={styles.statTrend}>
-            <GoArrowUp /> +5%
-          </div>
-        </div>
+        <StatsCard
+          statValue={statsData?.summary?.interestedRate}
+          statLabel="Interested Rate"
+          icon="star"
+          bgColor="#fff3e0"
+          iconColor="#f59e0b"
+        />
       </div>
 
       {/* Charts Section */}
@@ -208,9 +162,6 @@ export default function HomeDashbord(props) {
                 return <RecentLeadActivity key={item.id} item={item} />;
               })}
             </div>
-            <a href="#" className={styles.viewAllLink}>
-              View all activity →
-            </a>
           </div>
         </div>
 

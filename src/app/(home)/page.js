@@ -39,12 +39,16 @@ export default async function Homepage() {
 
   // Process results
   let remindersData = null;
+  let upcomingCount;
+
   let statsData = null;
 
-  if (
-    remindersResult.status === "fulfilled" &&
-    remindersResult.value.status === "success"
-  ) {
+  if (remindersResult.value.status === "success") {
+    console.log(
+      "remindersResult--",
+      remindersResult.value.data.upcomingReminders,
+    );
+
     remindersData = remindersResult.value.data;
   } else {
     console.log("Reminders fetch failed:", remindersResult.reason);
