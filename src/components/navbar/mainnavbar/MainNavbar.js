@@ -14,6 +14,8 @@ import { upcomingRemindersActions } from "../../../app/utils/reminderActions";
 export default function MainNavbar(props) {
   const { userRole } = props;
 
+  console.log("userRole--", userRole);
+
   const [notificationCount, setnotificationCount] = useState(0);
   const [notificationReminders, setnotificationReminders] = useState([]);
   const { handelOpenReminders } = useContext(ReminderContext);
@@ -25,6 +27,10 @@ export default function MainNavbar(props) {
   const navigationItems = [
     { id: 1, name: "Home", href: "/" },
     { id: 2, name: "Projects", href: "/projects" },
+  ];
+  const adminnavigationItems = [
+    { id: 1, name: "Leads", href: "/admin/leads" },
+    { id: 2, name: "Users", href: "/admin/users" },
   ];
 
   const handelget = async (req, res, next) => {
@@ -95,6 +101,22 @@ export default function MainNavbar(props) {
                 {item.name}
               </Link>
             ))}
+
+            {userRole === "admin" && (
+              <>
+                {adminnavigationItems.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={item.href}
+                    className={`${styles.nav_item} ${
+                      pathname === item.href ? styles.active : ""
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </>
+            )}
           </div>
         </div>
 

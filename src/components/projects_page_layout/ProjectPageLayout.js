@@ -1,21 +1,18 @@
 "use client";
 import React, { useContext } from "react";
 import styles from "./projectpagelayout.module.css";
-import { GoPlus, GoFilter } from "react-icons/go";
+import { GoFilter } from "react-icons/go";
 import Searchbar from "../elements/searchbar/Searchbar";
 import ProjectCard from "../elements/cards/ProjectCard";
 import useFillters from "../../_custome_hooks/useFillters";
 import FillterBar from "./FillterBar/FillterBar";
-import MobileFooter from "../footer/MobileFooter";
 import { AppContext } from "../../_contextApi/AppContextProvider";
 import MobileFilterDrawer from "./Mobile_Filter_Drawer/MobileFilterDrawer";
-import PageHeader from "../elements/page_header/PageHeader";
 import HeaderTopBar from "../elements/header_top_bar/HeaderTopBar";
 import StatTab from "../elements/stat_tab/StatTab";
 export default function ProjectPageLayout(props) {
-  const { apiData } = props;
-  const { isFilterOpen, setIsFilterOpen, toggleFilter, closeFilter } =
-    useContext(AppContext);
+  const { apiData, userRole } = props;
+  const { toggleFilter } = useContext(AppContext);
 
   const {
     visibleRows,
@@ -98,19 +95,19 @@ export default function ProjectPageLayout(props) {
           </div>
 
           <div className={styles.projectcard_wrapper}>
-            {visibleRows.map((project) => {
+            {visibleRows.map((project, index) => {
               return (
-                <div className={styles.card_wrapper}>
-                  <ProjectCard key={project._id} project={project} />
+                <div className={styles.card_wrapper} key={index}>
+                  <ProjectCard
+                    key={project._id}
+                    project={project}
+                    userRole={userRole}
+                  />
                 </div>
               );
             })}
           </div>
         </div>
-      </section>
-
-      <section className={styles.footer_wrapper}>
-        <MobileFooter />
       </section>
     </div>
   );

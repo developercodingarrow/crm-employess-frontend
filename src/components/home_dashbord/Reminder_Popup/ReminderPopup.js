@@ -31,10 +31,9 @@ export default function ReminderPopup() {
   const audioRef = useRef(null);
 
   const handeldismissReminder = async (leadId) => {
-    console.log("leadId", leadId);
     try {
       const res = await RemindernotifiedAction({ id: leadId });
-      console.log("res--", res);
+
       if (res.data.status === "success") {
         dismissReminder(leadId);
       }

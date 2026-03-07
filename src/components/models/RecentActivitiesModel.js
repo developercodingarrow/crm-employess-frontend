@@ -18,10 +18,8 @@ export default function RecentActivitiesModel() {
   const handelget = async () => {
     try {
       const res = await myRecentActivitiesCtion();
-      console.log("recentactivites-res", res.data);
 
       if (res.data.status === "success") {
-        console.log("recentactivites-res", res.data.data.activities);
         setrecentactivities(res.data.data.activities);
       }
     } catch (error) {

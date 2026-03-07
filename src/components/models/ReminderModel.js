@@ -37,13 +37,11 @@ export default function ReminderModel() {
   };
 
   const handleDeleteReminder = async (reminderId) => {
-    console.log("Delete reminder:", reminderId);
     // Set deleting ID for animation
     setDeletingId(reminderId);
 
     try {
       const res = await deleteReminderAction({ id: reminderId });
-      console.log("delete-", res);
 
       if (res.data.status === "success") {
         // Remove from UI after animation
@@ -62,7 +60,7 @@ export default function ReminderModel() {
   const handelclearAllRemider = async () => {
     try {
       const res = await clearAllNotifiedAction();
-      console.log("clear all--", res);
+
       if (res.data.status === "success") {
         // Remove all notified reminders
         setreminders((prev) => prev.filter((r) => r.isNotified !== true));

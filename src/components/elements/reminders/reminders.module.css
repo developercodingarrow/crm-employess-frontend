@@ -236,7 +236,7 @@
 
 .deleteBtn {
   position: absolute;
-  top: 8px;
+  top: 40px;
   right: 8px;
   width: 24px;
   height: 24px;
@@ -249,7 +249,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  opacity: 0;
+  opacity: 1;
 }
 
 .reminderItem:hover .deleteBtn {

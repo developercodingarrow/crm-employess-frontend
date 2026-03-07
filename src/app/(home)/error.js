@@ -10,6 +10,16 @@ export default function PageError({ error, reset }) {
     // Log the error to an error reporting service
     console.error("Home page error:", error);
   }, [error]);
+
+  // Get the error message
+  const errorMessage = error?.message || "Something went wrong";
+
+  // Check if it's a permission error
+  const isPermissionError = errorMessage.toLowerCase().includes("permission");
+  const isAuthError =
+    errorMessage.toLowerCase().includes("authenticated") ||
+    errorMessage.toLowerCase().includes("login");
+
   return (
     <div className={styles.container}>
       <div className={styles.errorCard}>
@@ -17,18 +27,26 @@ export default function PageError({ error, reset }) {
           <GoAlert className={styles.alertIcon} />
         </div>
 
-        <h1 className={styles.title}>Authentication Required</h1>
+        <h1 className={styles.title}>
+          {isPermissionError
+            ? "Access Denied"
+            : isAuthError
+              ? "Authentication Required"
+              : "Something Went Wrong"}
+        </h1>
 
-        <p className={styles.message}>
-          {error.message === "Not authenticated"
-            ? "You need to be logged in to access this page."
-            : "Something went wrong while loading this page."}
-        </p>
+        <p className={styles.message}>{errorMessage}</p>
 
         <div className={styles.actions}>
-          <Link href="/login" className={styles.loginBtn}>
-            Go to Login
-          </Link>
+          {isAuthError ? (
+            <Link href="/auth/login" className={styles.loginBtn}>
+              Go to Login
+            </Link>
+          ) : (
+            <Link href="/auth/login" className={styles.loginBtn}>
+              <GoHome /> Go to Login
+            </Link>
+          )}
 
           <button onClick={() => reset()} className={styles.tryAgainBtn}>
             Try Again

@@ -21,44 +21,6 @@ export default function BulkUpload({ onUpload }) {
     }
   };
 
-  // const handleUpload = useCallback(async () => {
-  //   if (!file) return;
-
-  //   setUploading(true);
-  //   setUploadStatus(null);
-
-  //   // Simulate CSV parsing and upload
-  //   setTimeout(() => {
-  //     // Mock successful upload
-  //     const mockLeads = [
-  //       {
-  //         name: "Imported Lead 1",
-  //         phone: "1234567890",
-  //         email: "import1@test.com",
-  //         source: "CSV Upload",
-  //         status: "New",
-  //       },
-  //       {
-  //         name: "Imported Lead 2",
-  //         phone: "0987654321",
-  //         email: "import2@test.com",
-  //         source: "CSV Upload",
-  //         status: "New",
-  //       },
-  //     ];
-
-  //     onUpload(mockLeads);
-  //     setUploadStatus("success");
-  //     setFile(null);
-
-  //     // Reset file input
-  //     const fileInput = document.getElementById("csv-upload");
-  //     if (fileInput) fileInput.value = "";
-
-  //     setUploading(false);
-  //   }, 2000);
-  // }, [file, onUpload]);
-
   const handleUpload = useCallback(async () => {
     if (!file) return;
 
@@ -73,7 +35,9 @@ export default function BulkUpload({ onUpload }) {
 
       // Call API
       const res = await bulkUploadLeads(formData);
-
+      if (res.error) {
+        setErrorMessage(res.error || "Something went wrong. Please try again.");
+      }
       if (res.success) {
         // Extract inserted leads from response
         const uploadedLeads = res.data?.data?.leads || [];

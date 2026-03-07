@@ -2,15 +2,15 @@
 import React, { useContext, useState } from "react";
 import styles from "./leadpageLayout.module.css";
 import { GoPlus, GoFilter, GoSearch, GoUpload } from "react-icons/go";
-import { dummyLeads } from "../../jsonData/dummyData";
 import LeadCard from "./lead_card/LeadCard";
 import BulkUpload from "./Bulk_lead_Upload/BulkUpload";
 import CreateLeadForm from "./Create_Lead_Form/CreateLeadForm";
 import { createNewLead } from "../../app/utils/adminAction";
 import { AppContext } from "../../_contextApi/AppContextProvider";
 import LeadUploadModel from "./lead_upload_model/LeadUploadModel";
-import MobileFooter from "../footer/MobileFooter";
 import HeaderTopBar from "../elements/header_top_bar/HeaderTopBar";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LeadsPageLayout(props) {
   const { showCreateForm, setShowCreateForm, openLeadForm } =
@@ -19,6 +19,7 @@ export default function LeadsPageLayout(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSource, setSelectedSource] = useState("All");
   const [leads, setLeads] = useState(apiLead);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const sources = [
     "All",
@@ -44,10 +45,25 @@ export default function LeadsPageLayout(props) {
 
   const handleAddLead = async (newLead) => {
     try {
+      setIsSubmitting(true); // Start spinner
       const res = await createNewLead(newLead);
+      // Check for error
+      if (res.error) {
+        toast.error(res.error, {
+          position: "bottom-center",
+          autoClose: 500,
+        });
+        setIsSubmitting(false);
+        return;
+      }
+      if (res.status === "success") {
+        toast.success(res.message || "Lead created successfully", {
+          position: "bottom-center",
+          autoClose: 300,
+        });
+        setIsSubmitting(false);
 
-      if (res.data.status === "success") {
-        const createdLead = res.data.data; // or res.data depending on your API structure
+        const createdLead = res.data; // or res.data depending on your API structure
         // Format the lead to match your frontend structure
         const formattedLead = {
           name: createdLead.name,
@@ -60,9 +76,20 @@ export default function LeadsPageLayout(props) {
 
         // Update leads state with formatted lead
         setLeads((prevLeads) => [formattedLead, ...prevLeads]);
+      } else {
+        toast.error("Failed to create lead", {
+          position: "bottom-center",
+          autoClose: 5000,
+        });
+        setIsSubmitting(false);
       }
     } catch (error) {
       console.log("error-", error);
+      toast.error("Something went wrong", {
+        position: "bottom-center",
+        autoClose: 5000,
+      });
+      setIsSubmitting(false);
     }
   };
 
@@ -76,6 +103,22 @@ export default function LeadsPageLayout(props) {
 
   return (
     <div className={styles.main_container}>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          zIndex: 99999,
+          fontSize: "14px",
+        }}
+      />
       <div className={styles.page_header}>
         <HeaderTopBar
           pageTitle="Leads Management"
@@ -177,7 +220,10 @@ export default function LeadsPageLayout(props) {
           {/* Content */}
           <div className={styles.content_container}>
             {showCreateForm ? (
-              <CreateLeadForm onAddLead={handleAddLead} />
+              <CreateLeadForm
+                onAddLead={handleAddLead}
+                loadingState={isSubmitting}
+              />
             ) : (
               <BulkUpload onUpload={handleBulkUpload} />
             )}
@@ -188,9 +234,6 @@ export default function LeadsPageLayout(props) {
           handleBulkUpload={handleBulkUpload}
         />
       </div>
-      <section className={styles.footer_wrapper}>
-        <MobileFooter />
-      </section>
     </div>
   );
 }

@@ -1,7 +1,10 @@
+// app/(home)/page.js
 import React from "react";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { API_BASE_URL } from "../../../config";
 import HomeDashbord from "../../components/home_dashbord/HomeDashbord";
+
 export default async function Homepage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("jwt")?.value;
@@ -9,67 +12,64 @@ export default async function Homepage() {
   const loginUser = loginUserString ? JSON.parse(loginUserString) : null;
 
   if (!token) {
-    throw new Error("Not authenticated");
+    redirect("/auth/login");
   }
 
-  // Create fetch functions
-  const fetchReminders = fetch(`${API_BASE_URL}/reminder/all`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  }).then((res) => (res.ok ? res.json() : Promise.reject("Reminders failed")));
+  try {
+    // Fetch reminders
+    const remindersRes = await fetch(`${API_BASE_URL}/reminder/all`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
 
-  const fetchStats = fetch(`${API_BASE_URL}/stats/employee`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  }).then((res) => (res.ok ? res.json() : Promise.reject("Stats failed")));
+    if (!remindersRes.ok) {
+      const errorData = await remindersRes.json();
+      // Extract just the message from the error object
+      throw new Error(errorData.message || `API Error ${remindersRes.status}`);
+    }
 
-  // Execute both, but don't fail completely if one fails
-  const [remindersResult, statsResult] = await Promise.allSettled([
-    fetchReminders,
-    fetchStats,
-  ]);
+    const remindersJson = await remindersRes.json();
 
-  // Process results
-  let remindersData = null;
-  let upcomingCount;
+    if (remindersJson.status !== "success") {
+      throw new Error(remindersJson.message || "Failed to fetch reminders");
+    }
 
-  let statsData = null;
+    // Fetch stats
+    const statsRes = await fetch(`${API_BASE_URL}/stats/employee`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
 
-  if (remindersResult.value.status === "success") {
-    console.log(
-      "remindersResult--",
-      remindersResult.value.data.upcomingReminders,
+    if (!statsRes.ok) {
+      const errorData = await statsRes.json();
+      throw new Error(errorData.message || `API Error ${statsRes.status}`);
+    }
+
+    const statsJson = await statsRes.json();
+
+    if (statsJson.status !== "success") {
+      throw new Error(statsJson.message || "Failed to fetch stats");
+    }
+
+    return (
+      <div>
+        <HomeDashbord
+          loginUser={loginUser}
+          remindersData={remindersJson.data}
+          statsData={statsJson.data}
+        />
+      </div>
     );
-
-    remindersData = remindersResult.value.data;
-  } else {
-    console.log("Reminders fetch failed:", remindersResult.reason);
+  } catch (error) {
+    // Now error.message will be just: "You do not have permission to access this"
+    throw new Error(error.message);
   }
-
-  if (
-    statsResult.status === "fulfilled" &&
-    statsResult.value.status === "success"
-  ) {
-    statsData = statsResult.value.data;
-  } else {
-    console.log("Stats fetch failed:", statsResult.reason);
-  }
-
-  return (
-    <div>
-      <HomeDashbord
-        loginUser={loginUser}
-        remindersData={remindersData}
-        statsData={statsData}
-      />
-    </div>
-  );
 }

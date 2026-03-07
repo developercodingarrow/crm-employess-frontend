@@ -1,103 +1,333 @@
-/* User Card */
-.user_card {
-  background: white;
-  border-radius: 16px;
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 16px;
-  border: 1px solid rgba(203, 213, 225, 0.3);
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  margin-bottom: 10px;
   transition: all 0.2s ease;
 }
 
-.user_card:hover {
-  transform: translateY(-2px);
+.card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
 }
 
-.user_card_header {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.user_avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.user_info {
+/* Left Section */
+.leftSection {
   flex: 1;
 }
 
-.user_name {
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.name {
   font-size: 16px;
   font-weight: 600;
   color: #1e293b;
-  margin: 0 0 4px 0;
 }
 
-.user_email {
+.userCount {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 30px;
+}
+
+.contactInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.phone,
+.email {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 13px;
+  color: #475569;
+}
+
+.phone svg,
+.email svg {
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Badges */
+.badgesRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.sourceBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 3px 10px;
+  border-radius: 30px;
+}
+
+.sourceIcon {
+  font-size: 12px;
   color: #64748b;
 }
 
-.card_icon {
-  font-size: 14px;
-}
-
-.status_toggle {
-  padding: 4px 12px;
-  border: none;
-  border-radius: 30px;
+.statusBadge {
   font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 30px;
+  text-transform: capitalize;
 }
 
-.status_toggle.active {
-  background-color: #d1fae5;
-  color: #059669;
-}
-
-.status_toggle.inactive {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-.user_card_footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 12px;
-  border-top: 1px solid rgba(203, 213, 225, 0.3);
-}
-
-.user_role {
+/* Assigned Users */
+.assignedUsers {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
-  border-radius: 30px;
   font-size: 12px;
-  font-weight: 500;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 6px 12px;
+  border-radius: 30px;
+  width: fit-content;
 }
 
-.role_icon_small {
+.groupIcon {
+  color: #3b82f6;
   font-size: 14px;
 }
 
-.user_joined {
-  font-size: 11px;
-  color: #94a3b8;
+.userTag {
+  color: #475569;
+  font-weight: 500;
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.actionLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #f8fafc;
+  border-radius: 30px;
+  text-decoration: none;
+  color: #475569;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.actionLink:hover {
+  background: #e6f0ff;
+  color: #3b82f6;
+  transform: translateX(-2px);
+}
+
+.actionIcon {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.actionLink:hover .actionIcon {
+  color: #3b82f6;
+}
+
+.arrowIcon {
+  font-size: 12px;
+  margin-left: auto;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.actionLink:hover .arrowIcon {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.moreUsers {
+  color: #64748b;
+  font-size: 12px;
+  margin: 0 2px;
+}
+
+.seeAllLink {
+  color: #3b82f6;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 4px;
+  padding: 2px 6px;
+  border-radius: 30px;
+  background: #e6f0ff;
+  transition: all 0.2s ease;
+}
+
+.seeAllLink:hover {
+  background: #3b82f6;
+  color: white;
+}
+.toggleWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggleSlider {
+  width: 36px; /* Reduced from 44px */
+  height: 20px; /* Reduced from 24px */
+  background: #e2e8f0;
+  border-radius: 30px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggleSlider.active {
+  background: #3b82f6;
+}
+
+.toggleKnob {
+  width: 16px; /* Reduced from 20px */
+  height: 16px; /* Reduced from 20px */
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.toggleSlider.active .toggleKnob {
+  left: 18px; /* 36px - 16px - 2px = 18px */
+}
+
+.toggleLabel {
+  font-size: 13px; /* Slightly smaller */
+  color: #475569;
+  transition: color 0.2s ease;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    padding: 12px;
+  }
+
+  .leftSection {
+    flex: 1;
+    width: 100%;
+  }
+
+  .name {
+    font-size: 15px;
+  }
+
+  .contactInfo {
+    gap: 12px;
+  }
+
+  .phone,
+  .email {
+    font-size: 12px;
+  }
+
+  .rightSection {
+    width: 100%;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .actionLink {
+    padding: 4px 10px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .rightSection {
+    width: 100%;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .actionLink {
+    justify-content: center;
+  }
+}
+
+/* extra */
+
+.toggleBtn {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.toggleBtn:focus {
+  outline: none;
+  ring: 2px solid #4299e1;
+}
+
+.toggleActive {
+  background-color: #48bb78;
+}
+
+.toggleInactive {
+  background-color: #fc8181;
+}
+
+.toggleCircle {
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggleActive .toggleCircle {
+  transform: translateX(20px);
 }

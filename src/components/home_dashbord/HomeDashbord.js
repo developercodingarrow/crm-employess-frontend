@@ -1,15 +1,7 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./homedashbord.module.css";
-
-import { MdOutlineLeaderboard, MdOutlineTrendingUp } from "react-icons/md";
-// Add this to your HomeDashbord component
-import { IoMdAlert, IoMdCall, IoMdMail, IoMdPeople } from "react-icons/io";
-import { MdAccessTime, MdNotificationsActive } from "react-icons/md";
-import { BsFillBellFill } from "react-icons/bs";
-
 import { ReminderContext } from "../../_contextApi/ReminderContextProvider";
-import ReminderForm from "../elements/reminder_form/ReminderForm";
 import Reminders from "../elements/reminders/Reminders";
 import {
   clearAllNotifiedAction,
@@ -17,9 +9,10 @@ import {
 } from "../../app/utils/reminderActions";
 import StatsBarItem from "../elements/stats_bar_item/StatsBarItem";
 import RecentLeadActivity from "../elements/recent_lead_activity/RecentLeadActivity";
-import MobileFooter from "../footer/MobileFooter";
+
 import StatsCard from "../elements/Stats_card/StatsCard";
-import { AppContext } from "../../_contextApi/AppContextProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function HomeDashbord(props) {
   const { loginUser, remindersData, statsData } = props;
@@ -35,39 +28,54 @@ export default function HomeDashbord(props) {
     // Set up interval to check every 5 seconds
     const interval = setInterval(() => {
       checkReminders(reminders);
-      console.log("Checking reminders at:", new Date().toLocaleTimeString());
     }, 5000);
 
     return () => clearInterval(interval);
   }, [reminders, checkReminders]);
 
   const handleDeleteReminder = async (reminderId) => {
-    console.log("Delete reminder:", reminderId);
     // Set deleting ID for animation
-    setDeletingId(reminderId);
-
     try {
       const res = await deleteReminderAction({ id: reminderId });
-      console.log("delete-", res);
+      console.log("res-", res);
+      if (res.error) {
+        toast.error(res.error || "Failed to delete reminder", {
+          position: "top-right",
+          autoClose: 5000,
+        });
 
+        return;
+      }
       if (res.data.status === "success") {
         // Remove from UI after animation
+        setDeletingId(reminderId);
         setTimeout(() => {
           setreminders((prev) => prev.filter((r) => r._id !== reminderId));
           setDeletingId(null);
         }, 300); // Match animation duration
       } else {
+        // Error toast from API
+        toast.error(res.error || "Failed to delete reminder", {
+          position: "top-right",
+          autoClose: 5000,
+        });
         setDeletingId(null);
       }
     } catch (error) {
-      console.log("error---", error);
+      // Unexpected error toast
+      toast.error("Something went wrong. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
+
+      setDeletingId(null);
     }
   };
 
   const handelclearAllRemider = async () => {
     try {
       const res = await clearAllNotifiedAction();
-      console.log("clear all--", res);
+
       if (res.data.status === "success") {
         // Remove all notified reminders
         setreminders((prev) => prev.filter((r) => r.isNotified !== true));
@@ -81,6 +89,7 @@ export default function HomeDashbord(props) {
 
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.welcomeSection}>
         <h1>Welcome back, {loginUser.name}! 👋</h1>
         <p>Here's what's happening with your projects today.</p>
@@ -174,10 +183,6 @@ export default function HomeDashbord(props) {
           />
         </div>
       </div>
-
-      <section className={styles.footer_wrapper}>
-        <MobileFooter />
-      </section>
     </div>
   );
 }

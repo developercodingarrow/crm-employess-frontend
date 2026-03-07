@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect, useContext } from "react";
+
 import styles from "./userlayout.module.css";
 import {
   GoSearch,
@@ -13,7 +14,6 @@ import UserForm from "./User_Form/UserForm";
 import UserCard from "./User_card/UserCard";
 import UserFormModal from "./User_form_modal/UserFormModal";
 import { AppContext } from "../../_contextApi/AppContextProvider";
-import MobileFooter from "../footer/MobileFooter";
 import HeaderTopBar from "../elements/header_top_bar/HeaderTopBar";
 import StatTab from "../elements/stat_tab/StatTab";
 
@@ -112,9 +112,9 @@ export default function UserLayout(props) {
           {/* Users List */}
           <div className={styles.users_list}>
             {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
+              filteredUsers.map((user, index) => (
                 <UserCard
-                  key={user.id}
+                  key={index}
                   user={user}
                   onToggleActive={handleToggleActive}
                 />
@@ -159,9 +159,6 @@ export default function UserLayout(props) {
         </div>
       </div>
       <UserFormModal onSubmit={handleAddUser} />
-      <section className={styles.footer_wrapper}>
-        <MobileFooter />
-      </section>
     </div>
   );
 }

@@ -533,7 +533,7 @@
 
 @media screen and (max-width: 768px) {
   .container {
-    padding: 5px;
+    padding: 5px 10px;
   }
   /* Welcome Section */
   .welcomeSection {

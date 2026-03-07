@@ -25,24 +25,30 @@ export async function changeLeadStatusAction(formData, leadID) {
       credentials: "include",
     });
 
-    // Check if response is OK
-    if (!res.ok) {
+    // Try to parse response as JSON first
+    let responseData;
+    try {
+      responseData = await res.json();
+    } catch {
       const text = await res.text();
-      console.error("API Error Response:", text);
       return {
         error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
         statusCode: res.status,
       };
     }
 
-    // Try to parse as JSON
-    const data = await res.json();
-    console.log("Response data:", data);
+    // Check if response is OK
+    if (!res.ok) {
+      return {
+        error: responseData.message || `Server error ${res.status}`,
+        statusCode: res.status,
+      };
+    }
 
-    // ✅ Return the data
+    // Success case
     return {
       success: true,
-      data: data,
+      data: responseData,
       statusCode: res.status,
     };
   } catch (error) {

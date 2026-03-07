@@ -28,7 +28,7 @@ export async function myRecentActivitiesCtion() {
     // Check if response is OK
     if (!res.ok) {
       const text = await res.text();
-      console.error("API Error Response:", text);
+
       return {
         error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
         statusCode: res.status,
@@ -37,7 +37,6 @@ export async function myRecentActivitiesCtion() {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("Response data:", data);
 
     // ✅ Return the data
     return {

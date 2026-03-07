@@ -3,7 +3,9 @@ import styles from "./projectcards.module.css";
 import Link from "next/link";
 import { GoLocation, GoCalendar } from "react-icons/go";
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, userRole }) {
+  console.log(userRole);
+
   // Format price in Indian Rupees
   const formatPrice = (price) => {
     if (price >= 10000000) {
@@ -72,13 +74,17 @@ export default function ProjectCard({ project }) {
         <div className={styles.location}>
           <GoLocation className={styles.icon} />
           <span>{project.city}</span>
+          <span>{project.state}</span>
         </div>
-        <Link
-          href={`/project-leads/${project._id}`}
-          className={styles.view_btn}
-        >
-          View Details →
-        </Link>
+
+        {userRole === "employee" && (
+          <Link
+            href={`/project-leads/${project._id}`}
+            className={styles.view_btn}
+          >
+            View Details →
+          </Link>
+        )}
       </div>
     </div>
   );

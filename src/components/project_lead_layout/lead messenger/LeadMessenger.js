@@ -1,6 +1,8 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation"; // Import router
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styles from "./leadmessenger.module.css";
 import {
   GoSearch,
@@ -74,28 +76,50 @@ export default function LeadMessenger(props) {
     try {
       const res = await leadRemarksAction(lead.id);
 
-      setSelectedLead(res.data.data.lead);
-      setleadRemarks(res.data.data.remarks);
+      // Check if response has error
+      if (res.error) {
+        toast.error(res.error);
+        return;
+      }
+      if (res.data.status === "success") {
+        setSelectedLead(res.data.data.lead);
+        setleadRemarks(res.data.data.remarks);
+      }
     } catch (error) {
-      console.log("error--", error);
+      console.error("Error selecting lead:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
   const handelCreatenewRemark = async (leadID) => {
+    // Don't send empty messages
+    if (!messageInput.trim()) {
+      toast.warning("Please enter a message");
+      return;
+    }
     setIsSending(true);
     try {
       const remarks = messageInput;
       const payload = { remarks };
       const res = await createLeadRemak(payload, leadID);
 
+      // Check if there's an error in the response
+      if (res.error) {
+        toast.error(res.error, {
+          position: "top-right",
+          autoClose: 5000,
+        });
+        setIsSending(false);
+        return;
+      }
+
       // ✅ Transform the response to match your leadRemarks format
       if (res.data.status === "success") {
         const newRemark = res.data.data.remark;
-
         // Transform to match your UI format
         const transformedRemark = {
           id: newRemark.id,
-          sender: "You", // Since current user created it
+          sender: "employee", // Since current user created it
           message: newRemark.remarks,
           time: "just now", // You need to create this function
           isMe: true,
@@ -109,6 +133,11 @@ export default function LeadMessenger(props) {
 
         setMessageInput("");
         setIsSending(false);
+      } else {
+        toast.error(res.data?.message || "Failed to add remark", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
     } catch (error) {
       setIsSending(false);
@@ -122,11 +151,18 @@ export default function LeadMessenger(props) {
 
     try {
       const res = await changeLeadStatusAction(formData, leadId);
-
+      // Check for error
+      if (res.error) {
+        toast.error(res.error, {
+          position: "top-right",
+          autoClose: 5000,
+        });
+        return;
+      }
       if (res.data.status === "success") {
         const transformedRemark = {
           id: res.data.data.remark.id,
-          sender: "You", // Since current user created it
+          sender: "employee", // Since current user created it
           message: res.data.data.remark.remarks,
           time: "just now", // You need to create this function
           isMe: true,
@@ -136,9 +172,18 @@ export default function LeadMessenger(props) {
         // Force re-render
         setRefreshTrigger((prev) => prev + 1);
         router.refresh(); // This refreshes server components
+      } else {
+        toast.error(res.data?.message || "Failed to update status", {
+          position: "top-right",
+          autoClose: 5000,
+        });
       }
     } catch (error) {
-      console.log("error--", error);
+      console.error("Status change error:", error);
+      toast.error("Something went wrong. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+      });
     }
   };
 
@@ -160,6 +205,22 @@ export default function LeadMessenger(props) {
 
   return (
     <div className={styles.main_container}>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          zIndex: 99999,
+          fontSize: "14px",
+        }}
+      />
       <div className={styles.inner_container}>
         {/* Left Column - Leads List (30%) */}
         <div
@@ -220,11 +281,6 @@ export default function LeadMessenger(props) {
                       >
                         {lead.status}
                       </span>
-                      {lead.unread > 0 && (
-                        <span className={styles.unread_badge}>
-                          {lead.unread}
-                        </span>
-                      )}
                     </div>
                   </div>
                 </div>

@@ -16,15 +16,6 @@ export default function LoginUi() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Login data:", data);
-      setIsLoading(false);
-    }, 1500);
-  };
-
   return (
     <div className={styles.login_container}>
       {/* Animated Background */}

@@ -37,7 +37,6 @@ export async function allReminders() {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("Response data:", data);
 
     // ✅ Return the data
     return {
@@ -88,7 +87,6 @@ export async function upcomingRemindersActions() {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("upcoming data:", data);
 
     // ✅ Return the data
     return {
@@ -138,7 +136,6 @@ export async function createReminderAction(formData) {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("Response data:", data);
 
     // ✅ Return the data
     return {
@@ -189,7 +186,6 @@ export async function RemindernotifiedAction(formData) {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("Response data:", data);
 
     // ✅ Return the data
     return {
@@ -228,24 +224,32 @@ export async function deleteReminderAction(formData) {
       credentials: "include",
     });
 
-    // Check if response is OK
-    if (!res.ok) {
+    // First try to parse response as JSON (whether success or error)
+    let responseData;
+    try {
+      responseData = await res.json();
+    } catch {
+      // If JSON parsing fails, return text error
       const text = await res.text();
-      console.error("API Error Response:", text);
       return {
         error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
         statusCode: res.status,
       };
     }
 
-    // Try to parse as JSON
-    const data = await res.json();
-    console.log("Response data:", data);
+    // Check if response is OK
+    if (!res.ok) {
+      // ✅ Return the clean message from JSON
+      return {
+        error: responseData.message || `Server error ${res.status}`,
+        statusCode: res.status,
+      };
+    }
 
-    // ✅ Return the data
+    // ✅ Success case
     return {
       success: true,
-      data: data,
+      data: responseData,
       statusCode: res.status,
     };
   } catch (error) {
@@ -291,7 +295,6 @@ export async function clearAllNotifiedAction(formData) {
 
     // Try to parse as JSON
     const data = await res.json();
-    console.log("Response data:", data);
 
     // ✅ Return the data
     return {

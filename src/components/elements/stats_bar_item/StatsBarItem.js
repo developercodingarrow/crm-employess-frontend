@@ -9,7 +9,6 @@ export default function StatsBarItem({
 }) {
   // Calculate percentage
   const percentage = total > 0 ? Math.round((value / total) * 100) : 0;
-  console.log("percentage--", percentage);
 
   return (
     <div className={styles.statusItem}>

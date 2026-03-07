@@ -25,25 +25,41 @@ export async function createNewLead(formData) {
       credentials: "include",
     });
 
-    // Check if response is OK
-    if (!res.ok) {
+    // Try to parse response as JSON first
+    let responseData;
+    try {
+      responseData = await res.json();
+    } catch {
       const text = await res.text();
-      console.error("API Error Response:", text);
       return {
         error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
         statusCode: res.status,
       };
     }
 
-    // Try to parse as JSON
-    const data = await res.json();
-    console.log("Response data:", data);
+    // Check if response is OK
+    if (!res.ok) {
+      return {
+        error: responseData.message || `Server error ${res.status}`,
+        statusCode: res.status,
+      };
+    }
 
-    // ✅ Return the data
+    // Check API success status
+    if (responseData.status !== "success") {
+      return {
+        error: responseData.message || "Failed to create lead",
+        statusCode: 400,
+      };
+    }
+
+    // Success case
     return {
       success: true,
-      data: data,
+      data: responseData.data,
+      message: responseData.message,
       statusCode: res.status,
+      status: "success",
     };
   } catch (error) {
     console.error("Fetch error:", error);
@@ -54,10 +70,8 @@ export async function createNewLead(formData) {
   }
 }
 
-// app/_actions/leadActions.js
 export async function bulkUploadLeads(formData) {
   try {
-    // Get auth token from cookies
     const cookieStore = await cookies();
     const authToken = cookieStore.get("jwt")?.value;
 
@@ -72,32 +86,65 @@ export async function bulkUploadLeads(formData) {
       method: "POST",
       headers: {
         Authorization: `Bearer ${authToken}`,
-        // Don't set Content-Type for FormData - browser sets it with boundary
       },
       body: formData,
       credentials: "include",
     });
 
-    if (!res.ok) {
+    // Try to parse response as JSON first
+    let responseData;
+    try {
+      responseData = await res.json();
+    } catch {
       const text = await res.text();
-      console.error("API Error Response:", text);
       return {
-        error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
+        error: `Server returned ${res.status}: ${text.substring(0, 200)}`,
         statusCode: res.status,
       };
     }
 
-    const data = await res.json();
+    // Check if response is OK
+    if (!res.ok) {
+      // Extract clean error message
+      const errorMessage =
+        responseData.message ||
+        responseData.error ||
+        `Upload failed (${res.status})`;
+      return {
+        error: errorMessage,
+        statusCode: res.status,
+        details: responseData.errors || null, // Pass validation errors if any
+      };
+    }
 
-    return {
+    // Check API success status
+    if (responseData.status !== "success") {
+      return {
+        error: responseData.message || "Upload failed",
+        statusCode: 400,
+        details: responseData.data?.errors || null,
+      };
+    }
+
+    // Success - format the response data nicely
+    const uploadResult = {
       success: true,
-      data: data,
+      message: responseData.message || "Upload successful",
+      data: {
+        totalRows: responseData.data?.totalRows || 0,
+        inserted: responseData.data?.inserted || 0,
+        failed: responseData.data?.failed || 0,
+        leads: responseData.data?.leads || [],
+        errors: responseData.data?.errors || [], // Row-level errors
+      },
       statusCode: res.status,
     };
+
+    return uploadResult;
   } catch (error) {
     console.error("Fetch error:", error);
     return {
-      error: error.message || "Request failed",
+      error: error.message || "Upload failed. Please try again.",
       statusCode: 500,
     };
   }
@@ -125,24 +172,38 @@ export async function createNewUser(formData) {
       credentials: "include",
     });
 
-    // Check if response is OK
-    if (!res.ok) {
+    // Try to parse response as JSON first
+    let responseData;
+    try {
+      responseData = await res.json();
+    } catch {
       const text = await res.text();
-      console.error("API Error Response:", text);
       return {
-        error: `Server returned ${res.status}: ${text.substring(0, 100)}`,
+        error: `Server returned ${res.status}: ${text.substring(0, 200)}`,
         statusCode: res.status,
       };
     }
 
-    // Try to parse as JSON
-    const data = await res.json();
-    console.log("Response data:", data);
+    // Check if response is OK
+    if (!res.ok) {
+      return {
+        error: responseData.message || `Server error ${res.status}`,
+        statusCode: res.status,
+      };
+    }
 
-    // ✅ Return the data
+    // Check API success status
+    if (responseData.status !== "success") {
+      return {
+        error: responseData.message || "Failed to create user",
+        statusCode: 400,
+      };
+    }
+
+    // Success case
     return {
       success: true,
-      data: data,
+      data: responseData,
       statusCode: res.status,
     };
   } catch (error) {

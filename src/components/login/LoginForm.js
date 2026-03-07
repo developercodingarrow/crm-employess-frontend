@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./css/loginform.module.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { GoMail, GoLock, GoEye, GoEyeClosed } from "react-icons/go";
 import { API_BASE_URL } from "../../../config";
@@ -18,6 +20,8 @@ export default function LoginForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
+
     setIsLoading(true);
     try {
       const res = await fetch(`${API_BASE_URL}/auth/login`, {
@@ -28,7 +32,7 @@ export default function LoginForm() {
         body: JSON.stringify(data),
       });
       const result = await res.json();
-      console.log("API Response:", result);
+
       if (result.status === "success") {
         document.cookie = `jwt=${result.token}; path=/; max-age=86400;`; // 1 day
         document.cookie = `user=${JSON.stringify(
@@ -38,17 +42,41 @@ export default function LoginForm() {
         router.push("/"); // Redirect to dashboard
         router.refresh(); // Refresh server components if needed
         setIsLoading(false);
+      } else {
+        // Error toast from backend
+        toast.error(result.message || "Login failed", {
+          position: "bottom-center",
+          autoClose: 5000,
+        });
+        setIsLoading(false);
       }
     } catch (error) {
       console.error("login error:", error);
-      alert("Something went wrong: " + error.message);
+      toast.error("Network error. Please try again.", {
+        position: "bottom-center",
+        autoClose: 5000,
+      });
       setIsLoading(false);
     }
-
-    // Simulate API call
   };
   return (
     <div className={styles.login_card}>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{
+          zIndex: 99999,
+          fontSize: "14px",
+        }}
+      />
       {/* Logo and Title */}
       <div className={styles.logo_section}>
         <div className={styles.logo_wrapper}>

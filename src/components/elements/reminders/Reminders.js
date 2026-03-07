@@ -62,7 +62,7 @@ export default function Reminders(props) {
 
   const handleDelete = (reminderId, e) => {
     e.stopPropagation();
-    console.log("🗑️ Delete reminder:", reminderId);
+
     if (onDeleteReminder) {
       onDeleteReminder(reminderId);
     }

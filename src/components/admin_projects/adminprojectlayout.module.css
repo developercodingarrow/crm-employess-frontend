@@ -1,0 +1,273 @@
+.main_container {
+  padding: 2.4rem;
+  height: 100%;
+  margin-bottom: 2rem;
+  background-color: #f8fafc;
+  margin-bottom: 10rem;
+}
+
+.page_header {
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+}
+
+.inner_container {
+  padding: 1rem;
+  display: flex;
+  column-gap: 50px;
+  position: relative;
+}
+
+.sidefillter_wrapper {
+  width: 270px;
+}
+
+/* Glass container */
+.project_wrapper {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(203, 213, 225, 0.3);
+  border-radius: 0.7rem;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+/* Optional: Add subtle blue tint at bottom */
+/* .page_elements_wrapper::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30%;
+  background: linear-gradient(to top, rgba(100, 150, 220, 0.05), transparent);
+  pointer-events: none;
+  border-radius: 20px;
+} */
+
+.search_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.searbar_wrapper {
+  gap: 16px;
+  background-color: #f8fafc;
+  padding: 4px;
+  border-radius: 40px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  flex-grow: 1;
+}
+
+.filtter_btn {
+  display: none;
+}
+
+.project_card_wrapper {
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.users_wrapper {
+  width: 25%;
+}
+
+/* Add to your component's module.css file */
+
+.selection_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 12px 24px;
+  border-radius: 50px;
+  margin: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  animation: slideDown 0.3s ease-out;
+}
+
+.selection_header span {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selection_header span::before {
+  content: "✓";
+  background: rgba(255, 255, 255, 0.2);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-right: 8px;
+}
+
+.selection_header button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selection_header button:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.selection_header button:active {
+  transform: translateY(0);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Alternative styles you might prefer */
+
+/* Style 2: Modern Minimal */
+.selection_header.minimal {
+  background: white;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+
+.selection_header.minimal span {
+  color: #333;
+  font-weight: 600;
+}
+
+.selection_header.minimal span::before {
+  background: #4caf50;
+  color: white;
+}
+
+.selection_header.minimal button {
+  background: #f44336;
+  color: white;
+  border-radius: 8px;
+}
+
+.selection_header.minimal button:hover {
+  background: #d32f2f;
+}
+
+/* Style 3: Light & Airy */
+.selection_header.light {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  border-radius: 8px;
+  box-shadow: none;
+  padding: 16px 24px;
+}
+
+.selection_header.light span {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.selection_header.light span::before {
+  background: #2196f3;
+  color: white;
+}
+
+.selection_header.light button {
+  background: transparent;
+  color: #757575;
+  box-shadow: none;
+  border: 1px solid #ddd;
+}
+
+.selection_header.light button:hover {
+  background: #f5f5f5;
+  color: #333;
+}
+
+@media screen and (max-width: 768px) {
+  .main_container {
+    padding: 0rem;
+    margin-bottom: 10rem;
+  }
+
+  .page_header {
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .inner_container {
+    padding: 0rem;
+  }
+
+  .sidefillter_wrapper {
+    display: none;
+  }
+
+  .search_wrapper {
+    margin-bottom: 1rem;
+    column-gap: 0.5rem;
+  }
+
+  .filtter_btn {
+    display: flex;
+    font-size: 2rem;
+    cursor: pointer;
+    width: 30px;
+  }
+
+  .project_wrapper {
+    border-radius: 0.3rem;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+    padding: 0.5rem;
+  }
+  .project_card_wrapper {
+    padding: 0.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .pageHeader_section {
+    border-radius: 0.5rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .page_topBar {
+    padding: 0.5rem 0.5rem;
+  }
+
+  .page_title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+    letter-spacing: 0.2px;
+  }
+}

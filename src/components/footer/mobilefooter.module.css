@@ -61,6 +61,16 @@
   display: none;
 }
 
+.footer_item.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.footer_item.disabled .icon {
+  color: #94a3b8;
+}
+
 /* Show only on mobile */
 @media (max-width: 768px) {
   .mobile_footer {

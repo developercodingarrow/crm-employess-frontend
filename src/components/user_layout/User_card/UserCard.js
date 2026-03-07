@@ -1,76 +1,90 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./usercard.module.css";
 import { GoPerson, GoMail, GoShield, GoCircleSlash } from "react-icons/go";
+import { MdMessage, MdGroup, MdArrowForward } from "react-icons/md";
+import { IoMdAttach } from "react-icons/io";
 
 export default function UserCard({ user, onToggleActive }) {
-  const getRoleIcon = (role) => {
-    switch (role) {
-      case "superadmin":
-        return "👑";
-      case "admin":
-        return "⚙️";
-      default:
-        return "👤";
-    }
-  };
-
-  const getRoleColor = (role) => {
-    switch (role) {
-      case "superadmin":
-        return "#8b5cf6";
-      case "admin":
-        return "#3b82f6";
-      default:
-        return "#10b981";
-    }
-  };
+  const [isActive, setIsActive] = useState(true);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
+      year: "numeric",
       month: "short",
       day: "numeric",
-      year: "numeric",
     });
   };
 
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "admin":
+        return "#3b82f6";
+      case "employee":
+        return "#10b981";
+      default:
+        return "#64748b";
+    }
+  };
+
+  // Get status background
+  const getStatusBg = (status) => {
+    switch (status) {
+      case "admin":
+        return "#e8f0fe";
+      case "employee":
+        return "#e0f7e9";
+      default:
+        return "#f1f5f9";
+    }
+  };
+
   return (
-    <div className={styles.user_card}>
-      <div className={styles.user_card_header}>
-        <div className={styles.user_avatar}>{user.name.charAt(0)}</div>
-        <div className={styles.user_info}>
-          <h4 className={styles.user_name}>{user.name}</h4>
-          <div className={styles.user_email}>
-            <GoMail className={styles.card_icon} />
-            <span>{user.email}</span>
-          </div>
+    <div className={styles.card}>
+      {/* Left Section - Lead Info */}
+      <div className={styles.leftSection}>
+        <div className={styles.nameRow}>
+          <span className={styles.name}>{user.name}</span>
+          <span className={styles.userCount}>
+            <GoPerson />
+          </span>
         </div>
-        <button
-          className={`${styles.status_toggle} ${user.isActive ? styles.active : styles.inactive}`}
-          onClick={() => onToggleActive(user.id)}
-          title={user.isActive ? "Deactivate user" : "Activate user"}
-        >
-          {user.isActive ? "Active" : "Inactive"}
-        </button>
+
+        <div className={styles.contactInfo}>
+          <span className={styles.email}>
+            <GoMail /> {formatDate(user.createdAt)}
+          </span>
+          <span className={styles.email}>
+            <GoMail /> {user.email}
+          </span>
+        </div>
+
+        <div className={styles.badgesRow}>
+          <span
+            className={styles.statusBadge}
+            style={{
+              background: getStatusBg(user.isActive),
+              color: getStatusColor(user.isActive),
+            }}
+          >
+            {isActive ? "Active" : "Inactive"}
+          </span>
+          <span
+            className={styles.statusBadge}
+            style={{
+              background: getStatusBg(user.role),
+              color: getStatusColor(user.role),
+            }}
+          >
+            {user.role}
+          </span>
+        </div>
       </div>
 
-      <div className={styles.user_card_footer}>
-        <div
-          className={styles.user_role}
-          style={{
-            backgroundColor: `${getRoleColor(user.role)}20`,
-            color: getRoleColor(user.role),
-          }}
-        >
-          <span className={styles.role_icon_small}>
-            {getRoleIcon(user.role)}
-          </span>
-          <span className={styles.role_text}>{user.role}</span>
-        </div>
-        <span className={styles.user_joined}>
-          Joined {formatDate(user.createdAt)}
-        </span>
-      </div>
+      {/* Right Section - Action Links */}
+      <div className={styles.rightSection}></div>
     </div>
   );
 }

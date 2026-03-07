@@ -8,8 +8,8 @@ export default function AppContextProvider({ children }) {
   const [selectedLeadMobile, setSelectedLeadMobile] = useState(null);
   const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
   const [isUserFormOpen, setIsUserFormOpen] = useState(false); // Add this
-  const [isLeadUplodOpen, setisLeadUplodOpen] = useState(true);
-  const [showCreateForm, setShowCreateForm] = useState(true); // Toggle between form and bulk upload
+  const [isLeadUplodOpen, setisLeadUplodOpen] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false); // Toggle between form and bulk upload
   const [isRecentActiviriesOpen, setisRecentActiviriesOpen] = useState(false);
 
   const toggleFilter = () => {

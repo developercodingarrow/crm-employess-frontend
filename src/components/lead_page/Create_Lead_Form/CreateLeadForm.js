@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./createform.module.css";
 import { GoX } from "react-icons/go";
 
-export default function CreateLeadForm({ onAddLead }) {
+export default function CreateLeadForm({ onAddLead, loadingState }) {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -13,6 +13,7 @@ export default function CreateLeadForm({ onAddLead }) {
   });
 
   const sources = [
+    "source select",
     "Website",
     "Walk-in",
     "Referral",
@@ -22,6 +23,7 @@ export default function CreateLeadForm({ onAddLead }) {
     "Other",
   ];
   const statuses = [
+    "Status select",
     "New",
     "Contacted",
     "Follow-up",
@@ -124,7 +126,13 @@ export default function CreateLeadForm({ onAddLead }) {
       </div>
 
       <button type="submit" className={styles.submit_btn}>
-        Create Lead
+        {loadingState ? (
+          <>
+            <span className={styles.spinner}></span>
+          </>
+        ) : (
+          "Create Lead"
+        )}
       </button>
     </form>
   );

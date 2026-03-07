@@ -61,7 +61,7 @@
   align-items: center;
   background-color: #f8fafc;
   border-radius: 40px;
-  padding: 8px 16px;
+  padding: 12px 16px;
   margin-bottom: 12px;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
@@ -230,6 +230,12 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
+  .main_container {
+    padding: var(--th-main-container-D-padding);
+    height: 100%;
+    background-color: var(--th-main-container-bg);
+    margin-bottom: 10rem;
+  }
   .inner_container {
     flex-direction: column;
     height: auto;
@@ -245,5 +251,59 @@
 
   .leads_column {
     height: 500px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 728px) {
+  .main_container {
+    padding: 1px;
+  }
+
+  .page_header {
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(203, 213, 225, 0.3);
+    /* padding: 20px; */
+    border-radius: 1px;
+    margin-bottom: 0rem;
+  }
+  .inner_container {
+    flex-direction: column;
+    height: auto;
+    border-radius: 0px;
+  }
+
+  .leads_column {
+    width: 100%;
+  }
+
+  /* Search and Filter */
+  .search_filter_container {
+    padding: 10px 10px 10px 10px;
+    border-bottom: 1px solid rgba(203, 213, 225, 0.3);
+  }
+
+  /* Leads Stats */
+  .leads_stats {
+    display: flex;
+    gap: 4px;
+    padding: 8px 1px;
+  }
+  .leads_list {
+    flex: 1;
+    padding: 1px;
+    gap: 5px;
+  }
+
+  .create_leadColumn {
+    display: none;
+  }
+
+  .leads_column {
+    min-height: 500px;
+    border-radius: 0px;
   }
 }

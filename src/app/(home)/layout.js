@@ -9,6 +9,7 @@ import MainNavbar from "../../components/navbar/mainnavbar/MainNavbar";
 import "../globals.css";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation"; // ✅ Add this import
 
 // Configure the Inter font
 const inter = Inter({
@@ -18,8 +19,8 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Property CRM | login ",
-  description: "login page",
+  title: "Property CRM | Dashboard",
+  description: "Property Management CRM",
 };
 
 export default async function HomeLayout({ children }) {
@@ -27,20 +28,21 @@ export default async function HomeLayout({ children }) {
     const cookieStore = await cookies();
     const token = cookieStore.get("jwt")?.value;
     const loginUserString = cookieStore.get("user")?.value;
+
+    if (!token) {
+      // Redirect to login instead of throwing error
+      redirect("/auth/login");
+    }
     // SAFE PARSING - Check if string exists and is valid
     let loginUser = null;
     if (loginUserString) {
       try {
         loginUser = JSON.parse(loginUserString);
       } catch (parseError) {
-        // Clear invalid cookie
-        // You might want to handle this differently
+        console.error("Error parsing user cookie:", parseError);
       }
     }
-    if (!token) {
-      // Redirect to login instead of throwing error
-      redirect("/login");
-    }
+
     return (
       <div className="font-sans antialiased">
         <AppContextProvider>
@@ -56,6 +58,6 @@ export default async function HomeLayout({ children }) {
       </div>
     );
   } catch (error) {
-    redirect("/login");
+    redirect("/auth/login");
   }
 }
